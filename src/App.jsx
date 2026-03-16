@@ -792,10 +792,6 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
       const L = window.L;
       if (!L) return;
 
-      // Remove default marker icons
-      delete L.Icon.Default.prototype._getIconUrl;
-      L.Icon.Default.mergeOptions({iconUrl:'',shadowUrl:'',iconSize:[0,0],iconAnchor:[0,0]});
-
       // Dark tile layer
       const map = L.map(mapRef.current, {
         center: [20, 10],
@@ -932,6 +928,8 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
         .leaflet-control-zoom { border: 1px solid rgba(255,255,255,0.1) !important; }
         .leaflet-control-zoom a { background: #111118 !important; color: rgba(255,255,255,0.6) !important; border-color: rgba(255,255,255,0.1) !important; }
         .leaflet-control-zoom a:hover { background: #1a1a2e !important; color: #f59e0b !important; }
+        .leaflet-marker-icon, .leaflet-marker-shadow { display: none !important; }
+        .leaflet-div-icon { display: none !important; }
       `}</style>
       <div ref={mapRef} style={{ height: 400, width: '100%', background: '#0d0d1a' }} />
     </div>
