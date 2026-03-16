@@ -808,19 +808,13 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
 
       mapInstanceRef.current = map;
 
-      // Load GeoJSON
-      fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
-        .then(r => r.json())
-        .then(geojson => {
-          L.geoJSON(geojson, {
-
       const NAME_TO_ID = {
         "Nigeria":"ng","Ghana":"gh","Senegal":"sn","Mali":"ml","Burkina Faso":"bf","Niger":"ne",
         "Guinea":"gn","Ivory Coast":"ci","Benin":"bj","Ethiopia":"et","Kenya":"ke","Tanzania":"tz",
         "Uganda":"ug","Somalia":"so","Sudan":"sd","Rwanda":"rw","South Africa":"za","Zimbabwe":"zw",
         "Zambia":"zm","Mozambique":"mz","Botswana":"bw","Namibia":"na",
-        "Democratic Republic of the Congo":"cd","Congo, the Democratic Republic of the":"cd","DR Congo":"cd",
-        "Cameroon":"cm","Central African Republic":"cf","Egypt":"eg","Libya":"ly","Morocco":"ma",
+        "Democratic Republic of the Congo":"cd","DR Congo":"cd","Cameroon":"cm",
+        "Central African Republic":"cf","Egypt":"eg","Libya":"ly","Morocco":"ma",
         "Tunisia":"tn","Algeria":"dz","Germany":"de","France":"fr","United Kingdom":"gb",
         "Poland":"pl","Hungary":"hu","Serbia":"rs","Russia":"ru","Ukraine":"ua","Belarus":"by",
         "Turkey":"tr","Iran":"ir","Iraq":"iq","Syria":"sy","Yemen":"ye","Saudi Arabia":"sa",
@@ -829,9 +823,14 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
         "Japan":"jp","South Korea":"kr","India":"in","Pakistan":"pk","Afghanistan":"af",
         "Bangladesh":"bd","Myanmar":"mm","Philippines":"ph","Indonesia":"id","Thailand":"th",
         "Cambodia":"kh","Australia":"au","New Zealand":"nz",
-        "United States of America":"us","United States":"us",
-        "C\u00f4te d'Ivoire":"ci","Cote d'Ivoire":"ci","Côte d'Ivoire":"ci",
+        "United States of America":"us","United States":"us","Ivory Coast":"ci",
       };
+
+      // Load GeoJSON
+      fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+        .then(r => r.json())
+        .then(geojson => {
+          L.geoJSON(geojson, {
             style: feature => {
               const name = feature.properties.name || '';
               const mappedId = NAME_TO_ID[name] || '';
