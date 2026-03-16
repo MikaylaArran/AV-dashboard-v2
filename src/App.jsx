@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
-import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps";
-
-const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+import { useState, useEffect, useRef } from "react";
 
 /* ═══════════════════════════════════════════════════
    DATA — V-Dem 2024, Freedom House 2024, World Bank 2023,
@@ -771,11 +768,140 @@ const NarrativeTab = ({TOPICS,COUNTRIES,articles,gdeltLoading,gdeltError,updated
 /* ═══════════════════════════════════════════
    MAIN APP
 ═══════════════════════════════════════════ */
+
+/* ─── LEAFLET MAP COMPONENT ──────────────── */
+const LeafletMap = ({ countries, selected, onSelect }) => {
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+  const layersRef = useRef({});
+
+  const riskColorLeaflet = v => v>=75?"#ef4444":v>=55?"#f59e0b":v>=35?"#eab308":"#22c55e";
+
+  useEffect(() => {
+    // Load Leaflet CSS and JS dynamically
+    if (!document.getElementById('leaflet-css')) {
+      const link = document.createElement('link');
+      link.id = 'leaflet-css';
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
+    }
+
+    const initMap = () => {
+      if (!mapRef.current || mapInstanceRef.current) return;
+      const L = window.L;
+      if (!L) return;
+
+      // Dark tile layer
+      const map = L.map(mapRef.current, {
+        center: [20, 10],
+        zoom: 2,
+        minZoom: 1,
+        maxZoom: 7,
+        zoomControl: true,
+        attributionControl: false,
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+      }).addTo(map);
+
+      mapInstanceRef.current = map;
+
+      // Load GeoJSON
+      fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
+        .then(r => r.json())
+        .then(geojson => {
+          L.geoJSON(geojson, {
+            style: feature => {
+              const iso = (feature.properties.ISO_A2 || '').toLowerCase();
+              const country = countries.find(c => c.id === iso);
+              return {
+                fillColor: country ? riskColorLeaflet(country.risk) : '#1a1a2e',
+                fillOpacity: country ? 0.6 : 0.3,
+                color: country ? riskColorLeaflet(country.risk) : '#333',
+                weight: 0.5,
+                opacity: 0.8,
+              };
+            },
+            onEachFeature: (feature, layer) => {
+              const iso = (feature.properties.ISO_A2 || '').toLowerCase();
+              const country = countries.find(c => c.id === iso);
+              layersRef.current[iso] = layer;
+
+              if (country) {
+                layer.on('click', () => onSelect(country.id));
+                layer.on('mouseover', () => {
+                  layer.setStyle({ fillOpacity: 0.9, weight: 1.5 });
+                  layer.bindTooltip(
+                    `<div style="font-family:IBM Plex Mono,monospace;font-size:11px;background:#0d0d1a;border:1px solid ${riskColorLeaflet(country.risk)}66;padding:6px 10px;border-radius:4px;color:#fff">
+                      <strong>${country.name}</strong><br/>
+                      <span style="color:${riskColorLeaflet(country.risk)}">Risk: ${country.risk}</span> &nbsp;·&nbsp; ${country.region}
+                    </div>`,
+                    { sticky: true, className: 'signal-tooltip' }
+                  ).openTooltip();
+                });
+                layer.on('mouseout', () => {
+                  layer.setStyle({ fillOpacity: 0.6, weight: 0.5 });
+                  layer.closeTooltip();
+                });
+              }
+            }
+          }).addTo(map);
+        });
+    };
+
+    if (window.L) {
+      initMap();
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      script.onload = initMap;
+      document.head.appendChild(script);
+    }
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+        layersRef.current = {};
+      }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Highlight selected country
+  useEffect(() => {
+    const L = window.L;
+    if (!L || !mapInstanceRef.current) return;
+    Object.entries(layersRef.current).forEach(([iso, layer]) => {
+      const country = countries.find(c => c.id === iso);
+      if (!country) return;
+      if (iso === selected) {
+        layer.setStyle({ fillOpacity: 1, weight: 2, color: '#fff' });
+      } else {
+        layer.setStyle({ fillColor: riskColorLeaflet(country.risk), fillOpacity: 0.6, color: riskColorLeaflet(country.risk), weight: 0.5 });
+      }
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
+
+  return (
+    <div>
+      <style>{`
+        .signal-tooltip .leaflet-tooltip { background: transparent !important; border: none !important; box-shadow: none !important; }
+        .leaflet-control-zoom { border: 1px solid rgba(255,255,255,0.1) !important; }
+        .leaflet-control-zoom a { background: #111118 !important; color: rgba(255,255,255,0.6) !important; border-color: rgba(255,255,255,0.1) !important; }
+        .leaflet-control-zoom a:hover { background: #1a1a2e !important; color: #f59e0b !important; }
+      `}</style>
+      <div ref={mapRef} style={{ height: 400, width: '100%', background: '#0d0d1a' }} />
+    </div>
+  );
+};
+
 export default function App() {
   const [tab,setTab]=useState("overview");
   const [sel,setSel]=useState(null);
-  const [mapZoom,setMapZoom]=useState(1);
-  const [mapCenter,setMapCenter]=useState([0,10]);
   const [selScenario,setSelScenario]=useState("repression");
   const [selPillar,setSelPillar]=useState("electoral");
   const [filterRegion,setFilterRegion]=useState("All Regions");
@@ -874,13 +1000,13 @@ export default function App() {
         {tab==="overview"&&(
           <div style={{position:"relative"}}>
 
-            {/* FULL-WIDTH MAP */}
+            {/* FULL-WIDTH LEAFLET MAP */}
             <div style={{background:"#0d0d1a",borderRadius:8,overflow:"hidden",border:"1px solid rgba(255,255,255,0.06)",marginBottom:16}}>
 
-              {/* Map top bar — legend + controls */}
+              {/* Map top bar */}
               <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"10px 16px",borderBottom:"1px solid rgba(255,255,255,0.05)"}}>
                 <div style={{display:"flex",gap:20,alignItems:"center"}}>
-                  {[["HIGH ALERT","#ef4444","≥75"],["ELEVATED","#f59e0b","55–74"],["MONITORING","#eab308","35–54"],["STABLE","#22c55e","<35"]].map(([l,c,r])=>(
+                  {[["HIGH ALERT","#ef4444",">=75"],["ELEVATED","#f59e0b","55-74"],["MONITORING","#eab308","35-54"],["STABLE","#22c55e","<35"]].map(([l,c,r])=>(
                     <div key={l} style={{display:"flex",alignItems:"center",gap:7}}>
                       <div style={{width:9,height:9,borderRadius:"50%",background:c,boxShadow:`0 0 6px ${c}88`}}/>
                       <div>
@@ -894,72 +1020,14 @@ export default function App() {
                   <select value={filterRegion} onChange={e=>setFilterRegion(e.target.value)} style={{fontSize:9}}>
                     {REGIONS.map(r=><option key={r}>{r}</option>)}
                   </select>
-                  <input type="text" placeholder="Search country…" value={searchQ} onChange={e=>setSearchQ(e.target.value)} style={{width:120,fontSize:9}}/>
-                  <div style={{display:"flex",gap:4}}>
-                    <button onClick={()=>setMapZoom(z=>Math.min(8,z*1.4))} style={S.mapBtn}>+</button>
-                    <button onClick={()=>setMapZoom(z=>Math.max(0.8,z/1.4))} style={S.mapBtn}>−</button>
-                    <button onClick={()=>{setMapZoom(1);setMapCenter([0,10]);}} style={{...S.mapBtn,fontSize:8}}>RESET</button>
-                  </div>
+                  <input type="text" placeholder="Search country..." value={searchQ} onChange={e=>setSearchQ(e.target.value)} style={{width:120,fontSize:9}}/>
                 </div>
               </div>
 
-              {/* Full map */}
-              <div style={{position:"relative",width:"100%"}}>
-                <ComposableMap
-                  projectionConfig={{scale:165,center:[0,15]}}
-                  width={980}
-                  height={360}
-                  style={{width:"100%",height:"auto",display:"block"}}
-                >
-                  <ZoomableGroup zoom={mapZoom} center={mapCenter} minZoom={0.8} maxZoom={8}
-                    onMoveEnd={({zoom:z,coordinates:c})=>{setMapZoom(z);setMapCenter(c);}}>
-                    <Geographies geography={GEO_URL}>
-                      {({geographies})=>geographies.map(geo=>{
-                        const geoIso=(geo.properties.iso_a2||"").toLowerCase();
-                        const match=filtered.find(c=>c.id===geoIso||c.name===geo.properties.name);
-                        const isSel=match&&match.id===sel;
-                        const fill=match?(isSel?riskColor(match.risk):`${riskColor(match.risk)}55`):"rgba(255,255,255,0.04)";
-                        const stroke=match?(isSel?riskColor(match.risk):`${riskColor(match.risk)}88`):"rgba(255,255,255,0.08)";
-                        const strokeW=0.3;
-                        return(
-                          <Geography key={geo.rsmKey} geography={geo}
-                            onClick={()=>match&&setSel(match.id)}
-                            style={{
-                              default:{fill,stroke,strokeWidth:strokeW,outline:"none"},
-                              hover:{fill:match?riskColor(match.risk):"rgba(255,255,255,0.06)",stroke:match?riskColor(match.risk):"rgba(255,255,255,0.15)",strokeWidth:0.6,outline:"none",cursor:match?"pointer":"default"},
-                              pressed:{outline:"none"},
-                            }}/>
-                        );
-                      })}
-                    </Geographies>
+              {/* Leaflet map */}
+              <LeafletMap countries={filtered} selected={sel} onSelect={setSel}/>
 
-                    {filtered.map(c=>{
-                      const isSel=c.id===sel;
-                      const col=riskColor(c.risk);
-                      const showLabel=mapZoom>2||c.pop>60||c.risk>=85;
-                      return(
-                        <Marker key={c.id} coordinates={[c.lon,c.lat]} onClick={()=>setSel(c.id)}>
-                          {isSel&&<circle r={16} fill="rgba(255,255,255,0.06)" opacity={1}/>}
-                          <circle r={isSel?7:4.5} fill={col} opacity={isSel?1:0.82}
-                            stroke={isSel?"#fff":"rgba(0,0,0,0.5)"} strokeWidth={isSel?1.5:0.4}
-                            style={{cursor:"pointer"}}>
-                            {c.risk>=75&&!isSel&&<animate attributeName="opacity" values="0.82;0.45;0.82" dur="2.2s" repeatCount="indefinite"/>}
-                          </circle>
-                          {isSel&&<circle r={13} fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" opacity="0.6" strokeDasharray="3,2"/>}
-                          {showLabel&&(
-                            <text textAnchor="middle" y={-9}
-                              style={{fontFamily:"'IBM Plex Sans',sans-serif",fontSize:mapZoom>3?7:6,fill:isSel?"#fff":"rgba(255,255,255,0.65)",pointerEvents:"none",fontWeight:isSel?700:400}}>
-                              {c.name}
-                            </text>
-                          )}
-                        </Marker>
-                      );
-                    })}
-                  </ZoomableGroup>
-                </ComposableMap>
-              </div>
-
-              {/* Map bottom bar — stats */}
+              {/* Map bottom bar */}
               <div style={{display:"flex",gap:20,padding:"10px 16px",borderTop:"1px solid rgba(255,255,255,0.04)",alignItems:"center"}}>
                 {[
                   [`${COUNTRIES.filter(c=>c.risk>=75).length} HIGH ALERT`,"#ef4444"],
@@ -972,7 +1040,7 @@ export default function App() {
                   </div>
                 ))}
                 <div style={{marginLeft:"auto",fontSize:8,color:"rgba(255,255,255,0.18)",fontFamily:"'IBM Plex Mono',monospace"}}>
-                  {filtered.length} countries · scroll=zoom · drag=pan · <span style={{color:"#f59e0b"}}>click country = intelligence</span>
+                  {filtered.length} countries shown · click country = intelligence panel
                 </div>
               </div>
             </div>
