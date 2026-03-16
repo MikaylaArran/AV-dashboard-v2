@@ -2006,8 +2006,8 @@ const getStyles = (dark) => {
   const border2 = dark ? "rgba(255,255,255,0.1)"  : "rgba(0,0,0,0.12)";
   const txt     = dark ? "#ffffff" : "#0f0f1a";
   const txt2    = dark ? "rgba(255,255,255,0.6)"  : "rgba(0,0,0,0.6)";
-  const txt3    = dark ? "rgba(255,255,255,0.38)" : "rgba(0,0,0,0.38)";
-  const txt4    = dark ? "rgba(255,255,255,0.2)"  : "rgba(0,0,0,0.2)";
+  const txt3    = dark ? "rgba(255,255,255,0.38)" : "rgba(0,0,0,0.65)";
+  const txt4    = dark ? "rgba(255,255,255,0.2)"  : "rgba(0,0,0,0.5)";
   const cardBg  = dark ? "rgba(255,255,255,0.025)": "#ffffff";
   const statBg  = dark ? "rgba(255,255,255,0.03)" : "#f9fafb";
   const pBtnBg  = dark ? "rgba(255,255,255,0.025)": "#f4f5f7";
