@@ -792,6 +792,10 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
       const L = window.L;
       if (!L) return;
 
+      // Remove default marker icons
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({iconUrl:'',shadowUrl:'',iconSize:[0,0],iconAnchor:[0,0]});
+
       // Dark tile layer
       const map = L.map(mapRef.current, {
         center: [20, 10],
@@ -868,6 +872,21 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
               }
             }
           }).addTo(map);
+
+          // Add permanent country name labels
+          countries.forEach(c => {
+            const label = L.marker([c.lat, c.lon], {
+              icon: L.divIcon({
+                className: '',
+                html: `<div style="font-family:'IBM Plex Sans',sans-serif;font-size:9px;font-weight:600;color:rgba(255,255,255,0.8);text-shadow:0 1px 3px rgba(0,0,0,0.9),0 0 8px rgba(0,0,0,1);white-space:nowrap;pointer-events:none;letter-spacing:0.02em">${c.name}</div>`,
+                iconSize: [100, 14],
+                iconAnchor: [50, 7],
+              }),
+              interactive: false,
+              zIndexOffset: -1000,
+            });
+            label.addTo(map);
+          });
         });
     };
 
