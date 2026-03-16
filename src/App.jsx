@@ -807,6 +807,7 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
       }).addTo(map);
 
       mapInstanceRef.current = map;
+      map.on('click', () => {}); // prevent default marker
 
       const NAME_TO_ID = {
         "Nigeria":"ng","Ghana":"gh","Senegal":"sn","Mali":"ml","Burkina Faso":"bf","Niger":"ne",
@@ -854,11 +855,8 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
                 layer.on('mouseover', () => {
                   layer.setStyle({ fillOpacity: 0.9, weight: 1.5 });
                   layer.bindTooltip(
-                    `<div style="font-family:IBM Plex Mono,monospace;font-size:11px;background:#0d0d1a;border:1px solid ${riskColorLeaflet(country.risk)}66;padding:6px 10px;border-radius:4px;color:#fff">
-                      <strong>${country.name}</strong><br/>
-                      <span style="color:${riskColorLeaflet(country.risk)}">Risk: ${country.risk}</span> &nbsp;·&nbsp; ${country.region}
-                    </div>`,
-                    { sticky: true, className: 'signal-tooltip' }
+                    `${country.name}  |  Risk: ${country.risk}  ·  ${country.region}`,
+                    { sticky: true, direction: 'top', offset: [0, -4] }
                   ).openTooltip();
                 });
                 layer.on('mouseout', () => {
@@ -924,14 +922,17 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
   return (
     <div>
       <style>{`
-        .signal-tooltip .leaflet-tooltip { background: transparent !important; border: none !important; box-shadow: none !important; }
         .leaflet-control-zoom { border: 1px solid rgba(255,255,255,0.1) !important; }
         .leaflet-control-zoom a { background: #111118 !important; color: rgba(255,255,255,0.6) !important; border-color: rgba(255,255,255,0.1) !important; }
         .leaflet-control-zoom a:hover { background: #1a1a2e !important; color: #f59e0b !important; }
-        .leaflet-marker-icon, .leaflet-marker-shadow { display: none !important; }
-        .leaflet-div-icon { display: none !important; }
+        .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-div-icon { display: none !important; }
+        .leaflet-tooltip { background: #0d0d1a !important; border: 1px solid rgba(255,255,255,0.15) !important; border-radius: 4px !important; color: #fff !important; font-family: 'IBM Plex Mono', monospace !important; font-size: 11px !important; padding: 6px 10px !important; box-shadow: 0 4px 16px rgba(0,0,0,0.6) !important; }
+        .leaflet-tooltip::before { display: none !important; }
+        .leaflet-attribution-flag { display: none !important; }
+        .leaflet-control-attribution { display: none !important; }
+        .leaflet-container a.leaflet-active { display: none !important; }
       `}</style>
-      <div ref={mapRef} style={{ height: 400, width: '100%', background: '#0d0d1a' }} />
+      <div ref={mapRef} style={{ height: 400, width: '100%', background: '#0d0d1a', zIndex: 0, position: 'relative' }} />
     </div>
   );
 };
@@ -1977,7 +1978,7 @@ export default function App() {
           background:"#0d0d1a",
           borderLeft:`1px solid ${riskColor(country.risk)}33`,
           borderTop:`3px solid ${riskColor(country.risk)}`,
-          zIndex:300,overflowY:"auto",
+          zIndex:1000,overflowY:"auto",
           boxShadow:"-12px 0 48px rgba(0,0,0,0.8)",
           animation:"slideIn 0.2s ease",
         }}>
