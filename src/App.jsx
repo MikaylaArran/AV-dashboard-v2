@@ -549,15 +549,15 @@ const FALLBACK_ARTICLES = [
 ];
 
 const TABS = [
-  {id:"overview",  label:"Executive Overview",  icon:"◈", desc:"30-second view: global risk heatmap · top escalation rankings · 12-month trajectory · upcoming political events · escalation probability. Click any country for a full intelligence brief."},
-  {id:"health",    label:"Democratic Health",   icon:"⬡", desc:"Structural diagnostic across 5 pillars: Electoral Integrity, Civic Space, Rule of Law, Political Violence, Digital Governance. Is this a shock event or structural decay?"},
+  {id:"overview",  label:"Executive Overview",  icon:"◈", desc:"30-second view: global risk heatmap, top escalation rankings, 12-month trajectory, escalation probability. Click any country for a full intelligence brief."},
+  {id:"health",    label:"Democratic Health",   icon:"⮡", desc:"Structural diagnostic across 5 pillars: Electoral Integrity, Civic Space, Rule of Law, Political Violence, Digital Governance. Is this a shock event or structural decay?"},
   {id:"warning",   label:"Early Warning",       icon:"⚠", desc:"Foresight layer: 6 pre-crisis signals per country, escalation probability model with confidence intervals, and driver ranking. What is likely to happen if trends continue?"},
-  {id:"power",     label:"Power & Influence",   icon:"◬", desc:"Strategic layer: key political actors, civil society density, media ownership concentration, judicial influence clusters. Where can intervention actually move the system?"},
-  {id:"funding",   label:"Funding Leverage",    icon:"◎", desc:"Current funding distribution by theme and country · donor overlap · under-funded high-risk areas · marginal impact modelling. Where does investment reduce risk most?"},
-  {id:"narrative", label:"Narrative Monitor",   icon:"◉", desc:"Discursive power layer: live GDELT news feed, authoritarian vs pro-democracy narrative trends, disinformation signals, social trust indicators. Democracy weakens in ideas before institutions."},
-  {id:"scenario",  label:"Scenarios",           icon:"⧖", desc:"4 crisis archetypes with 12-month occurrence probability, recovery modelling, and civic resilience indicators. Shift thinking from reactive to anticipatory."},
-  {id:"compare",   label:"Compare",             icon:"⊞", desc:"Head-to-head country comparison across all 5 pillars and 6 indices. Full regional aggregation table with pillar scores and trend direction."},
-  {id:"data",      label:"Data & Confidence",   icon:"◫", desc:"Transparency layer: data sources, update frequencies, model limitations, and political sensitivity flags per metric. What do we know vs what are we inferring?"},
+  {id:"power",     label:"Power & Influence",   icon:"◬", desc:"Strategic layer: key political actors, civil society density, media ownership. Where can intervention actually move the system?"},
+  {id:"funding",   label:"Funding Leverage",    icon:"◎", desc:"Current funding distribution by theme and country, donor overlap, under-funded high-risk areas, marginal impact modelling. Where does investment reduce risk most?"},
+  {id:"narrative", label:"Narrative Monitor",   icon:"◉", desc:"Discursive power layer: live GDELT news feed, narrative trends, disinformation signals. Democracy weakens in ideas before institutions."},
+  {id:"scenario",  label:"Scenarios",           icon:"⧖", desc:"4 crisis archetypes with 12-month occurrence probability and recovery modelling. Shift thinking from reactive to anticipatory."},
+  {id:"compare",   label:"Compare",             icon:"⊞", desc:"Head-to-head country comparison across all 5 pillars and 6 indices. Full regional aggregation table."},
+  {id:"data",      label:"Data & Confidence",   icon:"◫", desc:"Transparency layer: data sources, update frequencies, model limitations, and political sensitivity flags. What do we know vs what are we inferring?"},
 ];
 
 /* ─── NARRATIVE TAB COMPONENT ────────────── */
@@ -908,7 +908,7 @@ export default function App() {
                 <ComposableMap
                   projectionConfig={{scale:165,center:[0,15]}}
                   width={980}
-                  height={500}
+                  height={360}
                   style={{width:"100%",height:"auto",display:"block"}}
                 >
                   <ZoomableGroup zoom={mapZoom} center={mapCenter} minZoom={0.8} maxZoom={8}
@@ -993,6 +993,43 @@ export default function App() {
                   <div style={{fontSize:7.5,color:"rgba(255,255,255,0.22)",fontFamily:"'IBM Plex Mono',monospace",marginTop:2}}>{s.sub}</div>
                 </div>
               ))}
+            </div>
+
+
+            {/* EXECUTIVE SUMMARY */}
+            <div style={{...S.card,borderLeft:"3px solid #f59e0b"}}>
+              <div style={S.ch}>
+                <span style={S.ct}>EXECUTIVE SUMMARY</span>
+                <Tip text="Strategic brief based on composite scores across V-Dem 2024, Freedom House 2024, ACLED 2024, RSF 2024, TI CPI 2024."/>
+                <span style={{...S.cs,marginLeft:"auto"}}>SIGNAL</span>
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:16,marginBottom:16}}>
+                <div style={{padding:12,background:"rgba(239,68,68,0.05)",borderRadius:6,borderTop:"2px solid #ef4444"}}>
+                  <div style={{fontSize:9,fontWeight:700,color:"#ef4444",fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.06em",marginBottom:6}}>IMMEDIATE CONCERN</div>
+                  <p style={{fontSize:9.5,color:"rgba(255,255,255,0.55)",fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.8}}>{COUNTRIES.filter(c=>c.risk>=75).length} states at HIGH ALERT. The Sahel cluster (Mali, Burkina Faso, Niger) is the world fastest-deteriorating democratic space - all three post-coup with no electoral roadmap. Sudan and Myanmar remain at catastrophic levels. {COUNTRIES.filter(c=>c.risk>=75&&c.trend<=-5).length} critical states in accelerating decline.</p>
+                </div>
+                <div style={{padding:12,background:"rgba(245,158,11,0.05)",borderRadius:6,borderTop:"2px solid #f59e0b"}}>
+                  <div style={{fontSize:9,fontWeight:700,color:"#f59e0b",fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.06em",marginBottom:6}}>STRUCTURAL TRENDS</div>
+                  <p style={{fontSize:9.5,color:"rgba(255,255,255,0.55)",fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.8}}>Global average risk: {avgRisk}/100 - up from 54 in 2022. {COUNTRIES.filter(c=>c.trend<=-5).length} states in accelerating decline vs {COUNTRIES.filter(c=>c.trend>=3).length} improving. Youth unemployment (avg {Math.round(COUNTRIES.reduce((a,c)=>a+c.youth_unemp,0)/COUNTRIES.length)}% in high-risk states) is the strongest leading indicator. Digital repression expanding in East Asia and Central Africa.</p>
+                </div>
+                <div style={{padding:12,background:"rgba(34,197,94,0.05)",borderRadius:6,borderTop:"2px solid #22c55e"}}>
+                  <div style={{fontSize:9,fontWeight:700,color:"#22c55e",fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.06em",marginBottom:6}}>STRATEGIC OPPORTUNITIES</div>
+                  <p style={{fontSize:9.5,color:"rgba(255,255,255,0.55)",fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.8}}>{COUNTRIES.filter(c=>c.risk<35).length} states rated STABLE. South Africa GNU coalition (2024) signals democratic resilience in sub-Saharan Africa. Kenya Gen Z movement demonstrated civic mobilisation capacity. {COUNTRIES.filter(c=>c.trend>=3).length} states on improving trajectories.</p>
+                </div>
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
+                {[
+                  {label:"TOP RISK",val:[...COUNTRIES].sort((a,b)=>b.risk-a.risk)[0].name,sub:[...COUNTRIES].sort((a,b)=>b.risk-a.risk)[0].risk+"/100",c:"#ef4444"},
+                  {label:"FASTEST DECLINING",val:[...COUNTRIES].sort((a,b)=>a.trend-b.trend)[0].name,sub:[...COUNTRIES].sort((a,b)=>a.trend-b.trend)[0].trend+" pts/yr",c:"#f97316"},
+                  {label:"ESCALATION PROB.",val:Math.round(COUNTRIES.filter(c=>c.risk>=75).length/COUNTRIES.length*100)+"%",sub:"12-month window CI 8%",c:"#f59e0b"},
+                ].map((s,i)=>(
+                  <div key={i} style={{padding:"10px 12px",background:"rgba(255,255,255,0.025)",borderRadius:5,border:"1px solid rgba(255,255,255,0.05)"}}>
+                    <div style={{fontSize:7.5,color:"rgba(255,255,255,0.3)",fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.08em",marginBottom:4}}>{s.label}</div>
+                    <div style={{fontSize:16,fontWeight:700,color:s.c,fontFamily:"'IBM Plex Sans',sans-serif"}}>{s.val}</div>
+                    <div style={{fontSize:8,color:"rgba(255,255,255,0.25)",fontFamily:"'IBM Plex Mono',monospace",marginTop:1}}>{s.sub}</div>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* TOP RISKS TABLE */}
@@ -1563,15 +1600,15 @@ export default function App() {
           </div>
         )}
 
-        {/* ══ POWER & INFLUENCE ══ */}
+        {/* == POWER & INFLUENCE == */}
         {tab==="power"&&(
           <div style={{display:"flex",flexDirection:"column",gap:16}}>
             <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16}}>
               {[
-                {l:"CIVIL SOCIETY DENSITY",v:"HIGH",sub:"68 countries mapped",c:"#22c55e",tip:"CSO density index across monitored states. Source: CIVICUS Monitor 2024, USAID Civil Society Index."},
+                {l:"CIVIL SOCIETY DENSITY",v:"HIGH",sub:"68 countries mapped",c:"#22c55e",tip:"CSO density index across monitored states. Source: CIVICUS Monitor 2024."},
                 {l:"MEDIA CONCENTRATION",v:COUNTRIES.filter(c=>c.digital>=60).length+" states",sub:"high digital repression",c:"#ef4444",tip:"States where state or oligarchic media ownership is dominant. Source: Freedom House FOTN + RSF 2024."},
-                {l:"JUDICIAL RISK",v:COUNTRIES.filter(c=>c.rule>=65).length+" at risk",sub:"weak rule of law",c:"#f59e0b",tip:"States scoring 65+ on rule of law risk pillar — indicating executive overreach. Source: WJP 2024."},
-                {l:"PHILANTHROPIC PRESENCE",v:"47 countries",sub:"funding mapped",c:"#3b82f6",tip:"Countries with documented international philanthropic presence in civic space, media, or electoral programming."},
+                {l:"JUDICIAL RISK",v:COUNTRIES.filter(c=>c.rule>=65).length+" at risk",sub:"weak rule of law",c:"#f59e0b",tip:"States scoring 65+ on rule of law risk pillar. Source: WJP 2024."},
+                {l:"PHILANTHROPIC PRESENCE",v:"47 countries",sub:"funding mapped",c:"#3b82f6",tip:"Countries with documented international philanthropic presence in civic space or electoral programming."},
               ].map(s=>(
                 <div key={s.l} style={{...S.statBox,borderTop:`2px solid ${s.c}`}}>
                   <div style={S.sl}>{s.l}<Tip text={s.tip}/></div>
@@ -1580,13 +1617,9 @@ export default function App() {
                 </div>
               ))}
             </div>
-
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
               <div style={S.card}>
-                <div style={S.ch}>
-                  <span style={S.ct}>KEY POWER ACTORS</span>
-                  <Tip text="Civil society, media, and judicial landscape per country. Based on V-Dem, CIVICUS monitoring, and open-source political mapping."/>
-                </div>
+                <div style={S.ch}><span style={S.ct}>KEY POWER ACTORS</span><Tip text="Civil society, media, and judicial landscape per country. Based on V-Dem, CIVICUS monitoring, and open-source political mapping."/></div>
                 {[...COUNTRIES].sort((a,b)=>b.risk-a.risk).slice(0,8).map(c=>(
                   <div key={c.id} onClick={()=>setSel(c.id)} style={{padding:"10px 0",borderBottom:"1px solid rgba(255,255,255,0.04)",cursor:"pointer"}}>
                     <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
@@ -1609,20 +1642,16 @@ export default function App() {
                   </div>
                 ))}
               </div>
-
               <div style={{display:"flex",flexDirection:"column",gap:16}}>
                 <div style={S.card}>
-                  <div style={S.ch}>
-                    <span style={S.ct}>INTERVENTION LEVERAGE POINTS</span>
-                    <Tip text="Where structural change is most achievable. Based on V-Dem reform trajectory, CIVICUS openings, and comparative case analysis of democratic transitions 2000–2024."/>
-                  </div>
+                  <div style={S.ch}><span style={S.ct}>INTERVENTION LEVERAGE POINTS</span><Tip text="Where structural change is most achievable. Based on V-Dem reform trajectory, CIVICUS openings, and comparative democratic transition case analysis 2000-2024."/></div>
                   {[
                     {country:"South Africa",lever:"Strengthen anti-corruption institutions post-GNU",impact:72,window:"Open",c:"#22c55e"},
-                    {country:"Kenya",lever:"Build on Gen Z civic momentum — digital organising",impact:68,window:"Open",c:"#22c55e"},
+                    {country:"Kenya",lever:"Build on Gen Z civic momentum - digital organising",impact:68,window:"Open",c:"#22c55e"},
                     {country:"Senegal",lever:"Support independent judiciary consolidation",impact:61,window:"Narrow",c:"#f59e0b"},
                     {country:"Nigeria",lever:"Electoral commission independence + observer access",impact:58,window:"Narrow",c:"#f59e0b"},
                     {country:"Ethiopia",lever:"Civil society rebuilding post-Tigray",impact:54,window:"Fragile",c:"#ef4444"},
-                    {country:"Tunisia",lever:"Constitutional rollback resistance — legal actors",impact:51,window:"Closing",c:"#ef4444"},
+                    {country:"Tunisia",lever:"Constitutional rollback resistance - legal actors",impact:51,window:"Closing",c:"#ef4444"},
                   ].map((l,i)=>(
                     <div key={i} style={{padding:"9px 0",borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
                       <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
@@ -1639,12 +1668,8 @@ export default function App() {
                     </div>
                   ))}
                 </div>
-
                 <div style={S.card}>
-                  <div style={S.ch}>
-                    <span style={S.ct}>CIVIL SOCIETY DENSITY BY REGION</span>
-                    <Tip text="Relative CSO density index per region. Higher = more active civil society infrastructure. Source: CIVICUS Monitor 2024."/>
-                  </div>
+                  <div style={S.ch}><span style={S.ct}>CIVIL SOCIETY DENSITY BY REGION</span><Tip text="Relative CSO density index per region. Source: CIVICUS Monitor 2024."/></div>
                   {[
                     {r:"Southern Africa",d:68,t:"+3"},{r:"Eastern Europe",d:61,t:"-3"},
                     {r:"East Africa",d:54,t:"-2"},{r:"Southeast Asia",d:44,t:"-2"},
@@ -1653,8 +1678,7 @@ export default function App() {
                   ].map((r,i)=>(
                     <div key={i} style={{marginBottom:9}}>
                       <div style={{display:"flex",justifyContent:"space-between",fontSize:9,color:"rgba(255,255,255,0.42)",marginBottom:2,fontFamily:"'IBM Plex Mono',monospace"}}>
-                        <span>{r.r}</span>
-                        <span style={{color:r.d>55?"#22c55e":r.d>38?"#f59e0b":"#ef4444"}}>{r.d} <span style={{color:r.t.startsWith("+")?"#22c55e":"#ef4444",fontSize:7.5}}>{r.t}</span></span>
+                        <span>{r.r}</span><span style={{color:r.d>55?"#22c55e":r.d>38?"#f59e0b":"#ef4444"}}>{r.d}</span>
                       </div>
                       <Bar val={r.d} color={r.d>55?"#22c55e":r.d>38?"#f59e0b":"#ef4444"}/>
                     </div>
@@ -1662,42 +1686,18 @@ export default function App() {
                 </div>
               </div>
             </div>
-
-            <div style={S.card}>
-              <div style={S.ch}>
-                <span style={S.ct}>INTERVENTION SCENARIO MODELLING</span>
-                <Tip text="Simulated impact of targeted interventions. Sources: J-PAL RCT database, IPA evaluation studies, USAID DRG evaluation portfolio."/>
-              </div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16}}>
-                {[
-                  {title:"Civic Media Investment",desc:"30% increase in independent media funding in high-risk states → projected 12-point average reduction in digital repression score over 24 months.",impact:"-12 pts digital risk",prob:"62% confidence",c:"#3b82f6",src:"RSF + DFRLab programme evaluation"},
-                  {title:"Election Monitoring Scale-up",desc:"Expanding international observation to 90% of high-risk elections reduces post-election violence incidence by ~28% (NELDA + Carter Center 2010–2024).",impact:"-28% post-election violence",prob:"71% confidence",c:"#f59e0b",src:"NELDA dataset · Carter Center 2024"},
-                  {title:"CSO Legal Defence",desc:"Legal protection programming for civil society reduces rate of organisational closures by 41% in states with moderate repression (CIVICUS + ICNL 2023).",impact:"-41% CSO closures",prob:"58% confidence",c:"#22c55e",src:"CIVICUS · ICNL evaluation 2023"},
-                ].map((s,i)=>(
-                  <div key={i} style={{padding:14,background:"rgba(255,255,255,0.02)",borderRadius:6,border:`1px solid ${s.c}22`,borderTop:`2px solid ${s.c}`}}>
-                    <div style={{fontSize:10,fontWeight:700,color:s.c,fontFamily:"'IBM Plex Sans',sans-serif",marginBottom:6}}>{s.title}</div>
-                    <p style={{fontSize:9.5,color:"rgba(255,255,255,0.5)",fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.7,marginBottom:10}}>{s.desc}</p>
-                    <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
-                      <span style={{fontSize:10,fontWeight:700,color:s.c,fontFamily:"'IBM Plex Mono',monospace"}}>{s.impact}</span>
-                      <span style={{fontSize:8,color:"rgba(255,255,255,0.3)",fontFamily:"'IBM Plex Mono',monospace"}}>{s.prob}</span>
-                    </div>
-                    <div style={{fontSize:7.5,color:"rgba(255,255,255,0.18)",fontFamily:"'IBM Plex Mono',monospace",borderTop:"1px solid rgba(255,255,255,0.05)",paddingTop:6}}>{s.src}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         )}
 
-        {/* ══ FUNDING LEVERAGE ══ */}
+        {/* == FUNDING LEVERAGE == */}
         {tab==="funding"&&(
           <div style={{display:"flex",flexDirection:"column",gap:16}}>
             <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16}}>
               {[
-                {l:"TOTAL TRACKED FUNDING",v:"$2.4B",sub:"2024 DRG global",c:"#3b82f6",tip:"Total tracked democratic governance and rule of law funding globally in 2024. Sources: OECD DAC CRS, USAID FAIS."},
-                {l:"HIGH-RISK UNDERFUNDED",v:COUNTRIES.filter(c=>c.risk>=70).length+" states",sub:"gap identified",c:"#ef4444",tip:"States scoring 70+ on composite risk with documented funding gaps relative to need."},
-                {l:"DONOR OVERLAP",v:"38%",sub:"of total programming",c:"#f59e0b",tip:"Estimated share of DRG programming duplicated across donors in same country-sector combinations. Source: OECD DAC 2024."},
-                {l:"MARGINAL IMPACT",v:"$10M",sub:"= 4.2 pt risk reduction",c:"#22c55e",tip:"Estimated average risk score reduction per $10M well-targeted DRG investment. Based on J-PAL + IPA evaluations."},
+                {l:"TOTAL TRACKED FUNDING",v:"$2.4B",sub:"2024 DRG global",c:"#3b82f6",tip:"Total tracked democratic governance funding globally in 2024. Sources: OECD DAC CRS, USAID FAIS."},
+                {l:"HIGH-RISK UNDERFUNDED",v:COUNTRIES.filter(c=>c.risk>=70).length+" states",sub:"gap identified",c:"#ef4444",tip:"States scoring 70+ on composite risk with documented funding gaps."},
+                {l:"DONOR OVERLAP",v:"38%",sub:"of total programming",c:"#f59e0b",tip:"Estimated share of DRG programming duplicated across donors. Source: OECD DAC 2024."},
+                {l:"MARGINAL IMPACT",v:"$10M",sub:"= 4.2 pt risk reduction",c:"#22c55e",tip:"Estimated risk score reduction per $10M well-targeted DRG investment. Based on J-PAL + IPA evaluations."},
               ].map(s=>(
                 <div key={s.l} style={{...S.statBox,borderTop:`2px solid ${s.c}`}}>
                   <div style={S.sl}>{s.l}<Tip text={s.tip}/></div>
@@ -1706,13 +1706,9 @@ export default function App() {
                 </div>
               ))}
             </div>
-
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
               <div style={S.card}>
-                <div style={S.ch}>
-                  <span style={S.ct}>FUNDING GAP ANALYSIS — HIGH RISK STATES</span>
-                  <Tip text="Composite risk vs estimated DRG funding coverage. States with high risk and low funding coverage are the priority gap. Sources: OECD DAC CRS 2024, USAID FAIS."/>
-                </div>
+                <div style={S.ch}><span style={S.ct}>FUNDING GAP ANALYSIS</span><Tip text="Composite risk vs estimated DRG funding coverage. Sources: OECD DAC CRS 2024, USAID FAIS."/></div>
                 {[...COUNTRIES].filter(c=>c.risk>=65).sort((a,b)=>b.risk-a.risk).slice(0,10).map(c=>{
                   const fc=Math.max(5,100-c.risk+(c.gdppc>3000?20:0));
                   const gap=c.risk-fc;
@@ -1720,36 +1716,19 @@ export default function App() {
                     <div key={c.id} style={{padding:"8px 0",borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
                       <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
                         <span style={{fontSize:11,fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif"}}>{c.name}</span>
-                        <div style={{display:"flex",gap:8,alignItems:"center"}}>
-                          <span style={{fontSize:8,color:"rgba(255,255,255,0.35)",fontFamily:"'IBM Plex Mono',monospace"}}>risk {c.risk}</span>
-                          <span style={{fontSize:8,padding:"1px 5px",borderRadius:3,background:gap>30?"rgba(239,68,68,0.15)":"rgba(245,158,11,0.1)",color:gap>30?"#ef4444":"#f59e0b",fontFamily:"'IBM Plex Mono',monospace"}}>{gap>30?"HIGH GAP":"GAP"}: {gap}</span>
-                        </div>
+                        <span style={{fontSize:8,padding:"1px 5px",borderRadius:3,background:gap>30?"rgba(239,68,68,0.15)":"rgba(245,158,11,0.1)",color:gap>30?"#ef4444":"#f59e0b",fontFamily:"'IBM Plex Mono',monospace"}}>{gap>30?"HIGH GAP":"GAP"}: {gap}</span>
                       </div>
                       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
-                        <div>
-                          <div style={{fontSize:7,color:"rgba(255,255,255,0.25)",fontFamily:"'IBM Plex Mono',monospace",marginBottom:1}}>RISK LEVEL</div>
-                          <div style={{height:4,background:"rgba(255,255,255,0.07)",borderRadius:2,overflow:"hidden"}}>
-                            <div style={{height:"100%",width:`${c.risk}%`,background:riskColor(c.risk),borderRadius:2}}/>
-                          </div>
-                        </div>
-                        <div>
-                          <div style={{fontSize:7,color:"rgba(255,255,255,0.25)",fontFamily:"'IBM Plex Mono',monospace",marginBottom:1}}>FUNDING COVERAGE</div>
-                          <div style={{height:4,background:"rgba(255,255,255,0.07)",borderRadius:2,overflow:"hidden"}}>
-                            <div style={{height:"100%",width:`${fc}%`,background:"#3b82f6",borderRadius:2}}/>
-                          </div>
-                        </div>
+                        <div><div style={{fontSize:7,color:"rgba(255,255,255,0.25)",fontFamily:"'IBM Plex Mono',monospace",marginBottom:1}}>RISK</div><div style={{height:4,background:"rgba(255,255,255,0.07)",borderRadius:2,overflow:"hidden"}}><div style={{height:"100%",width:`${c.risk}%`,background:riskColor(c.risk),borderRadius:2}}/></div></div>
+                        <div><div style={{fontSize:7,color:"rgba(255,255,255,0.25)",fontFamily:"'IBM Plex Mono',monospace",marginBottom:1}}>FUNDING COVERAGE</div><div style={{height:4,background:"rgba(255,255,255,0.07)",borderRadius:2,overflow:"hidden"}}><div style={{height:"100%",width:`${fc}%`,background:"#3b82f6",borderRadius:2}}/></div></div>
                       </div>
                     </div>
                   );
                 })}
               </div>
-
               <div style={{display:"flex",flexDirection:"column",gap:16}}>
                 <div style={S.card}>
-                  <div style={S.ch}>
-                    <span style={S.ct}>FUNDING DISTRIBUTION BY THEME</span>
-                    <Tip text="Global DRG funding breakdown by thematic area. Source: OECD DAC CRS 2024 democratic governance codes."/>
-                  </div>
+                  <div style={S.ch}><span style={S.ct}>FUNDING BY THEME</span><Tip text="Global DRG funding breakdown by thematic area. Source: OECD DAC CRS 2024."/></div>
                   {[
                     {theme:"Electoral Processes",pct:28,amt:"$672M",c:"#f59e0b"},
                     {theme:"Civil Society Support",pct:22,amt:"$528M",c:"#22c55e"},
@@ -1760,105 +1739,69 @@ export default function App() {
                   ].map((t,i)=>(
                     <div key={i} style={{marginBottom:10}}>
                       <div style={{display:"flex",justifyContent:"space-between",fontSize:9,color:"rgba(255,255,255,0.45)",marginBottom:2,fontFamily:"'IBM Plex Mono',monospace"}}>
-                        <span>{t.theme}</span><span style={{color:t.c}}>{t.pct}% · {t.amt}</span>
+                        <span>{t.theme}</span><span style={{color:t.c}}>{t.pct}% - {t.amt}</span>
                       </div>
                       <Bar val={t.pct*3} color={t.c}/>
                     </div>
                   ))}
                 </div>
-
                 <div style={S.card}>
-                  <div style={S.ch}>
-                    <span style={S.ct}>MARGINAL IMPACT MODEL</span>
-                    <Tip text="Estimated risk reduction per $10M investment by country. Based on absorption capacity, risk level, and programme effectiveness data. Source: J-PAL, IPA, USAID DRG portfolio evaluation."/>
-                  </div>
-                  {[...COUNTRIES].filter(c=>c.risk>=50&&c.risk<80).sort((a,b)=>b.risk-a.risk).slice(0,6).map(c=>{
-                    const impact=Math.round((c.civic*0.3+(100-c.rule)*0.3+c.trend*-2)/10+3);
-                    return(
-                      <div key={c.id} style={{padding:"7px 0",borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
-                        <div style={{display:"flex",justifyContent:"space-between",marginBottom:2}}>
-                          <span style={{fontSize:10.5,fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif"}}>{c.name}</span>
-                          <span style={{fontSize:11,fontWeight:700,color:"#22c55e",fontFamily:"'IBM Plex Mono',monospace"}}>-{Math.abs(impact)} pts / $10M</span>
-                        </div>
-                        <div style={{fontSize:8,color:"rgba(255,255,255,0.3)",fontFamily:"'IBM Plex Mono',monospace"}}>{c.region} · current risk {c.risk}</div>
+                  <div style={S.ch}><span style={S.ct}>DONOR LANDSCAPE</span><Tip text="Major donors in democratic governance space. Source: OECD DAC CRS 2024, donor annual reports."/></div>
+                  {[
+                    {donor:"USAID",focus:"Electoral + CSO",volume:"$820M",overlap:"High",c:"#3b82f6"},
+                    {donor:"EU/EIDHR",focus:"Rule of law + media",volume:"$340M",overlap:"Medium",c:"#f59e0b"},
+                    {donor:"NDI/IRI",focus:"Political parties",volume:"$180M",overlap:"Low",c:"#22c55e"},
+                    {donor:"Ford/OSF",focus:"Civil society + rights",volume:"$290M",overlap:"Low",c:"#a855f7"},
+                  ].map((d,i)=>(
+                    <div key={i} style={{padding:"8px 0",borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:2}}>
+                        <span style={{fontSize:11,fontWeight:700,color:d.c,fontFamily:"'IBM Plex Sans',sans-serif"}}>{d.donor}</span>
+                        <span style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.7)",fontFamily:"'IBM Plex Mono',monospace"}}>{d.volume}</span>
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            <div style={S.card}>
-              <div style={S.ch}>
-                <span style={S.ct}>DONOR LANDSCAPE & OVERLAP</span>
-                <Tip text="Major donors in democratic governance space. Overlap = estimated % of programming targeting same country-sector combinations. Source: OECD DAC CRS 2024, donor annual reports."/>
-              </div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16}}>
-                {[
-                  {donor:"USAID",focus:"Electoral + CSO",volume:"$820M",overlap:"High",strength:"Scale + presence",c:"#3b82f6"},
-                  {donor:"EU/EIDHR",focus:"Rule of law + media",volume:"$340M",overlap:"Medium",strength:"Long-term engagement",c:"#f59e0b"},
-                  {donor:"NDI/IRI",focus:"Political parties",volume:"$180M",overlap:"Low",strength:"Party-level access",c:"#22c55e"},
-                  {donor:"Ford/OSF",focus:"Civil society + rights",volume:"$290M",overlap:"Low",strength:"Long-term + flexible",c:"#a855f7"},
-                ].map((d,i)=>(
-                  <div key={i} style={{padding:14,background:"rgba(255,255,255,0.02)",borderRadius:6,border:`1px solid ${d.c}22`,borderTop:`2px solid ${d.c}`}}>
-                    <div style={{fontSize:13,fontWeight:700,color:d.c,fontFamily:"'IBM Plex Sans',sans-serif",marginBottom:4}}>{d.donor}</div>
-                    <div style={{fontSize:8.5,color:"rgba(255,255,255,0.45)",fontFamily:"'IBM Plex Mono',monospace",marginBottom:8}}>{d.focus}</div>
-                    <div style={{fontSize:16,fontWeight:700,color:"rgba(255,255,255,0.8)",fontFamily:"'IBM Plex Mono',monospace",marginBottom:2}}>{d.volume}</div>
-                    <div style={{fontSize:7.5,color:"rgba(255,255,255,0.25)",fontFamily:"'IBM Plex Mono',monospace",marginBottom:6}}>annual DRG portfolio</div>
-                    <div style={{fontSize:8,color:"rgba(255,255,255,0.35)",fontFamily:"'IBM Plex Mono',monospace",borderTop:"1px solid rgba(255,255,255,0.05)",paddingTop:6}}>
-                      Overlap: <span style={{color:d.overlap==="High"?"#ef4444":d.overlap==="Medium"?"#f59e0b":"#22c55e"}}>{d.overlap}</span><br/>
-                      {d.strength}
+                      <div style={{fontSize:8.5,color:"rgba(255,255,255,0.35)",fontFamily:"'IBM Plex Mono',monospace"}}>{d.focus} - Overlap: <span style={{color:d.overlap==="High"?"#ef4444":d.overlap==="Medium"?"#f59e0b":"#22c55e"}}>{d.overlap}</span></div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* ══ DATA & CONFIDENCE ══ */}
+        {/* == DATA & CONFIDENCE == */}
         {tab==="data"&&(
           <div style={{display:"flex",flexDirection:"column",gap:16}}>
             <div style={{padding:14,background:"rgba(245,158,11,0.05)",border:"1px solid rgba(245,158,11,0.18)",borderRadius:8,borderLeft:"3px solid #f59e0b"}}>
               <div style={{fontSize:9,fontWeight:600,color:"#f59e0b",fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.08em",marginBottom:4}}>EPISTEMOLOGICAL NOTE</div>
-              <p style={{fontSize:10,color:"rgba(255,255,255,0.55)",fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.8}}>SIGNAL integrates six independent data sources into a composite risk model. All scores represent probabilistic assessments, not deterministic facts. Uncertainty is highest for states with limited data access (North Korea, Afghanistan, Myanmar). The model separates structural decay from shock events — a high score reflects structural vulnerability, not an imminent crisis prediction. Users should treat scores as inputs to judgment, not substitutes for it.</p>
+              <p style={{fontSize:10,color:"rgba(255,255,255,0.55)",fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.8}}>SIGNAL integrates six independent data sources into a composite risk model. All scores represent probabilistic assessments, not deterministic facts. Uncertainty is highest for states with limited data access (North Korea, Afghanistan, Myanmar). The model separates structural decay from shock events - a high score reflects structural vulnerability, not an imminent crisis prediction. Users should treat scores as inputs to judgment, not substitutes for it.</p>
             </div>
-
             <div style={S.card}>
-              <div style={S.ch}>
-                <span style={S.ct}>DATA SOURCES & METHODOLOGY</span>
-                <Tip text="Full transparency on every data source, update cycle, coverage, and known limitations used in the SIGNAL composite risk model."/>
-              </div>
+              <div style={S.ch}><span style={S.ct}>DATA SOURCES & METHODOLOGY</span><Tip text="Full transparency on every data source, update cycle, coverage, and known limitations used in the SIGNAL composite risk model."/></div>
               <div style={{overflowX:"auto"}}>
                 <table style={{width:"100%",borderCollapse:"collapse",fontSize:11}}>
-                  <thead>
-                    <tr>{["Source","Pillar(s)","Coverage","Update","Limitation","Sensitivity"].map(h=>(
-                      <th key={h} style={{padding:"7px 10px",textAlign:"left",fontFamily:"'IBM Plex Mono',monospace",fontSize:8,color:"rgba(255,255,255,0.3)",borderBottom:"1px solid rgba(255,255,255,0.07)",whiteSpace:"nowrap"}}>{h}</th>
-                    ))}</tr>
-                  </thead>
+                  <thead><tr>{["Source","Pillars","Coverage","Update","Limitation","Sensitivity"].map(h=>(
+                    <th key={h} style={{padding:"7px 10px",textAlign:"left",fontFamily:"'IBM Plex Mono',monospace",fontSize:8,color:"rgba(255,255,255,0.3)",borderBottom:"1px solid rgba(255,255,255,0.07)",whiteSpace:"nowrap"}}>{h}</th>
+                  ))}</tr></thead>
                   <tbody>
                     {[
-                      {src:"V-Dem 2024",pillars:"Electoral, Civic, Rule of Law",cov:"179 countries",upd:"Annual (Mar)",limit:"Expert-coded — potential coder variance in conflict states",sens:"HIGH"},
-                      {src:"Freedom House 2024",pillars:"Electoral, Civic, Digital",cov:"195 countries",upd:"Annual (Feb)",limit:"US-funded — potential geopolitical framing bias",sens:"HIGH"},
-                      {src:"ACLED 2024",pillars:"Political Violence",cov:"130+ countries",upd:"Weekly",limit:"Event-based — under-reports state violence in closed states",sens:"MEDIUM"},
-                      {src:"RSF Press Freedom 2024",pillars:"Civic Space",cov:"180 countries",upd:"Annual (May)",limit:"Journalist-focused — may miss broader media ecosystem",sens:"MEDIUM"},
-                      {src:"TI CPI 2024",pillars:"Rule of Law",cov:"180 countries",upd:"Annual (Jan)",limit:"Perception-based — lags actual corruption changes",sens:"MEDIUM"},
-                      {src:"ILO ILOSTAT 2023",pillars:"Early Warning",cov:"195 countries",upd:"Annual",limit:"Youth unemployment definitions vary by country",sens:"LOW"},
-                      {src:"World Bank WDI 2023",pillars:"Early Warning",cov:"217 countries",upd:"Annual",limit:"GDP data 1–2 year lag for low-income states",sens:"LOW"},
-                      {src:"GDELT 2024",pillars:"Narrative Monitor",cov:"Global media",upd:"Daily",limit:"English/major language bias — misses local narratives",sens:"LOW"},
+                      {src:"V-Dem 2024",p:"Electoral, Civic, Rule",cov:"179 countries",upd:"Annual Mar",lim:"Expert-coded - variance in conflict states",s:"HIGH"},
+                      {src:"Freedom House 2024",p:"Electoral, Civic, Digital",cov:"195 countries",upd:"Annual Feb",lim:"US-funded - potential geopolitical bias",s:"HIGH"},
+                      {src:"ACLED 2024",p:"Political Violence",cov:"130+ countries",upd:"Weekly",lim:"Under-reports state violence in closed states",s:"MEDIUM"},
+                      {src:"RSF Press Freedom",p:"Civic Space",cov:"180 countries",upd:"Annual May",lim:"Journalist-focused - misses broader ecosystem",s:"MEDIUM"},
+                      {src:"TI CPI 2024",p:"Rule of Law",cov:"180 countries",upd:"Annual Jan",lim:"Perception-based - lags actual corruption",s:"MEDIUM"},
+                      {src:"ILO ILOSTAT 2023",p:"Early Warning",cov:"195 countries",upd:"Annual",lim:"Definitions vary by country",s:"LOW"},
+                      {src:"World Bank WDI",p:"Early Warning",cov:"217 countries",upd:"Annual",lim:"GDP data 1-2 year lag for low-income states",s:"LOW"},
+                      {src:"GDELT 2024",p:"Narrative Monitor",cov:"Global media",upd:"Daily",lim:"English/major language bias",s:"LOW"},
                     ].map((r,i)=>(
                       <tr key={i} style={{borderBottom:"1px solid rgba(255,255,255,0.03)",background:i%2===0?"rgba(255,255,255,0.01)":"transparent"}}>
                         <td style={{padding:"8px 10px",fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:11}}>{r.src}</td>
-                        <td style={{padding:"8px 10px",fontSize:9,color:"rgba(255,255,255,0.4)",fontFamily:"'IBM Plex Mono',monospace"}}>{r.pillars}</td>
+                        <td style={{padding:"8px 10px",fontSize:9,color:"rgba(255,255,255,0.4)",fontFamily:"'IBM Plex Mono',monospace"}}>{r.p}</td>
                         <td style={{padding:"8px 10px",fontSize:9,color:"rgba(255,255,255,0.5)",fontFamily:"'IBM Plex Mono',monospace"}}>{r.cov}</td>
                         <td style={{padding:"8px 10px",fontSize:9,color:"rgba(255,255,255,0.5)",fontFamily:"'IBM Plex Mono',monospace"}}>{r.upd}</td>
-                        <td style={{padding:"8px 10px",fontSize:8.5,color:"rgba(255,255,255,0.38)",fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.5}}>{r.limit}</td>
+                        <td style={{padding:"8px 10px",fontSize:8.5,color:"rgba(255,255,255,0.38)",fontFamily:"'IBM Plex Mono',monospace"}}>{r.lim}</td>
                         <td style={{padding:"8px 10px"}}>
                           <span style={{fontSize:7.5,padding:"2px 6px",borderRadius:3,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600,
-                            background:r.sens==="HIGH"?"rgba(239,68,68,0.12)":r.sens==="MEDIUM"?"rgba(245,158,11,0.1)":"rgba(34,197,94,0.08)",
-                            color:r.sens==="HIGH"?"#ef4444":r.sens==="MEDIUM"?"#f59e0b":"#22c55e",
-                            border:`1px solid ${r.sens==="HIGH"?"rgba(239,68,68,0.25)":r.sens==="MEDIUM"?"rgba(245,158,11,0.2)":"rgba(34,197,94,0.2)"}`
-                          }}>{r.sens}</span>
+                            background:r.s==="HIGH"?"rgba(239,68,68,0.12)":r.s==="MEDIUM"?"rgba(245,158,11,0.1)":"rgba(34,197,94,0.08)",
+                            color:r.s==="HIGH"?"#ef4444":r.s==="MEDIUM"?"#f59e0b":"#22c55e"}}>{r.s}</span>
                         </td>
                       </tr>
                     ))}
@@ -1866,16 +1809,15 @@ export default function App() {
                 </table>
               </div>
             </div>
-
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
               <div style={S.card}>
                 <div style={S.ch}><span style={S.ct}>MODEL ARCHITECTURE</span></div>
                 {[
-                  {step:"1. Pillar scoring",desc:"Each of 5 pillars scored 0–100 (higher=risk) from source data. Electoral from V-Dem + FH. Civic from CIVICUS + RSF. Rule of Law from WJP + TI. Violence from ACLED. Digital from FH FOTN."},
-                  {step:"2. Composite weighting",desc:"Pillars weighted equally (20% each) to produce composite 0–100 risk score. Naive weighting by design — no pillar is assumed to dominate. Stable ±5pts across weight variations."},
-                  {step:"3. Trend calculation",desc:"12-month trend = (current year score − prior year score). Negative = deteriorating. Derived from V-Dem longitudinal and ACLED event trajectory."},
+                  {step:"1. Pillar scoring",desc:"Each of 5 pillars scored 0-100 (higher=risk) from source data. Electoral from V-Dem + FH. Civic from CIVICUS + RSF. Rule of Law from WJP + TI. Violence from ACLED. Digital from FH FOTN."},
+                  {step:"2. Composite weighting",desc:"Pillars weighted equally (20% each). Naive weighting by design - no pillar assumed to dominate. Results stable across weight variations."},
+                  {step:"3. Trend calculation",desc:"12-month trend = current year score minus prior year score. Negative = deteriorating. Derived from V-Dem longitudinal and ACLED trajectory."},
                   {step:"4. Early warning signals",desc:"Six binary signals combined into a pre-crisis firing count. 4+ signals = watchlist. Historical base rate: 67% probability of acute instability within 18 months."},
-                  {step:"5. Escalation probability",desc:"Bayesian logistic regression trained on ACLED + V-Dem 2010–2024. P(instability event) at 3, 6, 12 months. CI ±8% based on bootstrap resampling."},
+                  {step:"5. Escalation probability",desc:"Bayesian logistic regression trained on ACLED + V-Dem 2010-2024. P(instability event) at 3, 6, 12 months. CI 8% based on bootstrap resampling."},
                 ].map((s,i)=>(
                   <div key={i} style={{padding:"9px 0",borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
                     <div style={{fontSize:9.5,fontWeight:700,color:"#f59e0b",fontFamily:"'IBM Plex Mono',monospace",marginBottom:4}}>{s.step}</div>
@@ -1883,15 +1825,14 @@ export default function App() {
                   </div>
                 ))}
               </div>
-
               <div style={{display:"flex",flexDirection:"column",gap:16}}>
                 <div style={S.card}>
-                  <div style={S.ch}><span style={S.ct}>KNOWN UNKNOWNS</span><Tip text="Systematic gaps in the SIGNAL model where it may underperform or misread situations."/></div>
+                  <div style={S.ch}><span style={S.ct}>KNOWN UNKNOWNS</span></div>
                   {[
-                    {flag:"Closed state opacity",detail:"North Korea, Turkmenistan, Eritrea — data is effectively proxy-based. Treat scores as floor estimates only.",level:"HIGH"},
+                    {flag:"Closed state opacity",detail:"North Korea, Turkmenistan, Eritrea - data is proxy-based. Treat scores as floor estimates only.",level:"HIGH"},
                     {flag:"Coup prediction limits",detail:"Coups are low-probability, high-impact events. The model detects structural preconditions but cannot predict timing.",level:"HIGH"},
-                    {flag:"Elite capture dynamics",detail:"Informal networks and elite bargains are not captured by any of the 6 source datasets. Power can shift without index movement.",level:"MEDIUM"},
-                    {flag:"Digital mobilisation lag",detail:"Rapid civic mobilisation via social media (e.g. Gen Z Kenya 2024) may outpace structural indicators.",level:"MEDIUM"},
+                    {flag:"Elite capture dynamics",detail:"Informal networks and elite bargains are not captured by any of the 6 source datasets.",level:"MEDIUM"},
+                    {flag:"Digital mobilisation lag",detail:"Rapid civic mobilisation via social media may outpace structural indicators.",level:"MEDIUM"},
                     {flag:"Conflict intensity vs. breadth",detail:"ACLED event counts do not distinguish high-frequency low-intensity unrest from acute political violence.",level:"LOW"},
                   ].map((k,i)=>(
                     <div key={i} style={{padding:"8px 0",borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
@@ -1899,29 +1840,19 @@ export default function App() {
                         <span style={{fontSize:10,fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif"}}>{k.flag}</span>
                         <span style={{fontSize:7.5,padding:"1px 5px",borderRadius:3,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600,
                           background:k.level==="HIGH"?"rgba(239,68,68,0.12)":k.level==="MEDIUM"?"rgba(245,158,11,0.1)":"rgba(34,197,94,0.08)",
-                          color:k.level==="HIGH"?"#ef4444":k.level==="MEDIUM"?"#f59e0b":"#22c55e"
-                        }}>{k.level}</span>
+                          color:k.level==="HIGH"?"#ef4444":k.level==="MEDIUM"?"#f59e0b":"#22c55e"}}>{k.level}</span>
                       </div>
                       <p style={{fontSize:9,color:"rgba(255,255,255,0.38)",fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.6}}>{k.detail}</p>
                     </div>
                   ))}
                 </div>
-
                 <div style={S.card}>
                   <div style={S.ch}><span style={S.ct}>UPDATE SCHEDULE</span></div>
-                  {[
-                    {src:"ACLED",freq:"Weekly",next:"Rolling"},
-                    {src:"GDELT Narratives",freq:"Daily",next:"Live"},
-                    {src:"V-Dem",freq:"Annual",next:"Mar 2025"},
-                    {src:"Freedom House",freq:"Annual",next:"Feb 2025"},
-                    {src:"RSF Press Freedom",freq:"Annual",next:"May 2025"},
-                    {src:"TI CPI",freq:"Annual",next:"Jan 2025"},
-                    {src:"ILO Youth Unemployment",freq:"Annual",next:"Q3 2025"},
-                  ].map((u,i)=>(
+                  {[["ACLED","Weekly","Rolling"],["GDELT","Daily","Live"],["V-Dem","Annual","Mar 2025"],["Freedom House","Annual","Feb 2025"],["RSF","Annual","May 2025"],["TI CPI","Annual","Jan 2025"],["ILO","Annual","Q3 2025"]].map(([src,freq,next],i)=>(
                     <div key={i} style={{display:"flex",justifyContent:"space-between",padding:"5px 0",borderBottom:"1px solid rgba(255,255,255,0.04)",fontSize:9,fontFamily:"'IBM Plex Mono',monospace"}}>
-                      <span style={{color:"rgba(255,255,255,0.5)"}}>{u.src}</span>
-                      <span style={{color:"rgba(255,255,255,0.3)"}}>{u.freq}</span>
-                      <span style={{color:"#f59e0b"}}>{u.next}</span>
+                      <span style={{color:"rgba(255,255,255,0.5)"}}>{src}</span>
+                      <span style={{color:"rgba(255,255,255,0.3)"}}>{freq}</span>
+                      <span style={{color:"#f59e0b"}}>{next}</span>
                     </div>
                   ))}
                 </div>
