@@ -915,17 +915,18 @@ export default function App() {
                     onMoveEnd={({zoom:z,coordinates:c})=>{setMapZoom(z);setMapCenter(c);}}>
                     <Geographies geography={GEO_URL}>
                       {({geographies})=>geographies.map(geo=>{
-                        const match=filtered.find(c=>c.name===geo.properties.name||c.iso===geo.properties.iso_a3);
+                        const geoIso=(geo.properties.iso_a2||"").toLowerCase();
+                        const match=filtered.find(c=>c.id===geoIso||c.name===geo.properties.name);
                         const isSel=match&&match.id===sel;
-                        const fill=isSel?"rgba(255,255,255,0.12)":"rgba(255,255,255,0.04)";
-                        const stroke="rgba(255,255,255,0.08)";
+                        const fill=match?(isSel?riskColor(match.risk):`${riskColor(match.risk)}55`):"rgba(255,255,255,0.04)";
+                        const stroke=match?(isSel?riskColor(match.risk):`${riskColor(match.risk)}88`):"rgba(255,255,255,0.08)";
                         const strokeW=0.3;
                         return(
                           <Geography key={geo.rsmKey} geography={geo}
                             onClick={()=>match&&setSel(match.id)}
                             style={{
                               default:{fill,stroke,strokeWidth:strokeW,outline:"none"},
-                              hover:{fill:match?"rgba(255,255,255,0.09)":"rgba(255,255,255,0.06)",stroke:match?riskColor(match.risk):"rgba(255,255,255,0.15)",strokeWidth:0.5,outline:"none",cursor:match?"pointer":"default"},
+                              hover:{fill:match?riskColor(match.risk):"rgba(255,255,255,0.06)",stroke:match?riskColor(match.risk):"rgba(255,255,255,0.15)",strokeWidth:0.6,outline:"none",cursor:match?"pointer":"default"},
                               pressed:{outline:"none"},
                             }}/>
                         );
