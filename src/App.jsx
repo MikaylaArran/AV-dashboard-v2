@@ -1,5 +1,42 @@
 import { useState, useEffect, useRef } from "react";
 
+const getStyles = (dark) => {
+  const bg      = dark ? "#0a0a0f" : "#f4f5f7";
+  const bg2     = dark ? "#0d0d1a" : "#ffffff";
+  const bg3     = dark ? "#111118" : "#eef0f3";
+  const border  = dark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.08)";
+  const border2 = dark ? "rgba(255,255,255,0.1)"  : "rgba(0,0,0,0.12)";
+  const txt     = dark ? "#ffffff" : "#0f0f1a";
+  const txt2    = dark ? "rgba(255,255,255,0.6)"  : "rgba(0,0,0,0.6)";
+  const txt3    = dark ? "rgba(255,255,255,0.38)" : "rgba(0,0,0,0.65)";
+  const txt4    = dark ? "rgba(255,255,255,0.2)"  : "rgba(0,0,0,0.5)";
+  const cardBg  = dark ? "rgba(255,255,255,0.025)": "#ffffff";
+  const statBg  = dark ? "rgba(255,255,255,0.03)" : "#f9fafb";
+  const pBtnBg  = dark ? "rgba(255,255,255,0.025)": "#f4f5f7";
+  return {
+    dark,
+    bg, bg2, bg3, txt, txt2, txt3, txt4,
+    root:{background:bg,minHeight:"100vh",color:txt,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:13,transition:"background 0.2s,color 0.2s"},
+    header:{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 24px",borderBottom:`1px solid ${border}`,background:bg,position:"sticky",top:0,zIndex:100,flexWrap:"wrap",gap:10},
+    chip:{display:"flex",alignItems:"center",gap:5,padding:"4px 11px",background:dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.05)",border:`1px solid ${border}`,borderRadius:20,fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",color:txt3},
+    nav:{display:"flex",overflowX:"auto",borderBottom:`1px solid ${border}`,padding:"0 24px",gap:2,background:bg},
+    navBtn:{display:"flex",alignItems:"center",padding:"11px 14px",background:"transparent",border:"none",color:txt3,cursor:"pointer",fontSize:10,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.04em",whiteSpace:"nowrap",borderBottom:"2px solid transparent",transition:"all 0.15s"},
+    navA:{color:"#f59e0b",borderBottom:"2px solid #f59e0b"},
+    card:{background:cardBg,border:`1px solid ${border}`,borderRadius:8,padding:16,overflow:"hidden"},
+    ch:{display:"flex",alignItems:"center",gap:6,marginBottom:16,flexWrap:"wrap"},
+    ct:{fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",color:dark?"rgba(255,255,255,0.45)":"rgba(0,0,0,0.45)",letterSpacing:"0.08em",fontWeight:500},
+    cs:{fontSize:8,fontFamily:"'IBM Plex Mono',monospace",color:txt4},
+    badge:{padding:"2px 7px",borderRadius:4,fontSize:8,fontFamily:"'IBM Plex Mono',monospace"},
+    statBox:{padding:14,background:statBg,border:`1px solid ${border}`,borderRadius:6},
+    sl:{fontSize:8,fontFamily:"'IBM Plex Mono',monospace",color:dark?"rgba(255,255,255,0.27)":"rgba(0,0,0,0.35)",letterSpacing:"0.1em",marginBottom:6,textTransform:"uppercase"},
+    pBtn:{display:"flex",alignItems:"center",gap:10,width:"100%",padding:"10px 12px",background:pBtnBg,border:`1px solid ${border}`,borderRadius:6,color:txt2,cursor:"pointer",textAlign:"left",marginBottom:6,transition:"all 0.15s"},
+    pBtnA:{background:"rgba(245,158,11,0.07)",border:"1px solid rgba(245,158,11,0.22)",color:"#f59e0b"},
+    mapBtn:{background:dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.05)",border:`1px solid ${border2}`,color:txt2,cursor:"pointer",borderRadius:4,padding:"4px 9px",fontSize:11,fontFamily:"'IBM Plex Mono',monospace",transition:"all 0.15s"},
+    exportBtn:{background:dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.04)",border:`1px solid ${border2}`,color:txt2,cursor:"pointer",borderRadius:4,padding:"4px 10px",fontSize:8.5,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.05em",transition:"all 0.15s"},
+  };
+};
+
+
 /* ═══════════════════════════════════════════════════
    DATA — V-Dem 2024, Freedom House 2024, World Bank 2023,
    ACLED 2024 pre-loaded, RSF 2024, TI 2024
@@ -1029,7 +1066,7 @@ export default function App() {
       {/* HEADER */}
       <header style={S.header}>
         <div style={{display:"flex",alignItems:"center",gap:12}}>
-          <img src={process.env.PUBLIC_URL+"/logo.png"} alt="Logo" style={{width:34,height:34,objectFit:"contain",filter:darkMode?"brightness(0) invert(1)":"none"}}/>
+          <img src="/logo.png" alt="Logo" style={{width:34,height:34,objectFit:"contain",filter:darkMode?"brightness(0) invert(1)":"none"}}/>
           <div>
             <div style={{fontSize:15,fontWeight:700,letterSpacing:"0.1em",color:S.txt,fontFamily:"'IBM Plex Sans',sans-serif"}}>SIGNAL</div>
             <div style={{fontSize:8.5,color:S.txt4,letterSpacing:"0.06em",fontFamily:"'IBM Plex Mono',monospace"}}>Democratic Risk Intelligence · {COUNTRIES.length} countries</div>
@@ -2020,39 +2057,3 @@ export default function App() {
     </div>
   );
 }
-
-const getStyles = (dark) => {
-  const bg      = dark ? "#0a0a0f" : "#f4f5f7";
-  const bg2     = dark ? "#0d0d1a" : "#ffffff";
-  const bg3     = dark ? "#111118" : "#eef0f3";
-  const border  = dark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.08)";
-  const border2 = dark ? "rgba(255,255,255,0.1)"  : "rgba(0,0,0,0.12)";
-  const txt     = dark ? "#ffffff" : "#0f0f1a";
-  const txt2    = dark ? "rgba(255,255,255,0.6)"  : "rgba(0,0,0,0.6)";
-  const txt3    = dark ? "rgba(255,255,255,0.38)" : "rgba(0,0,0,0.65)";
-  const txt4    = dark ? "rgba(255,255,255,0.2)"  : "rgba(0,0,0,0.5)";
-  const cardBg  = dark ? "rgba(255,255,255,0.025)": "#ffffff";
-  const statBg  = dark ? "rgba(255,255,255,0.03)" : "#f9fafb";
-  const pBtnBg  = dark ? "rgba(255,255,255,0.025)": "#f4f5f7";
-  return {
-    dark,
-    bg, bg2, bg3, txt, txt2, txt3, txt4,
-    root:{background:bg,minHeight:"100vh",color:txt,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:13,transition:"background 0.2s,color 0.2s"},
-    header:{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 24px",borderBottom:`1px solid ${border}`,background:bg,position:"sticky",top:0,zIndex:100,flexWrap:"wrap",gap:10},
-    chip:{display:"flex",alignItems:"center",gap:5,padding:"4px 11px",background:dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.05)",border:`1px solid ${border}`,borderRadius:20,fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",color:txt3},
-    nav:{display:"flex",overflowX:"auto",borderBottom:`1px solid ${border}`,padding:"0 24px",gap:2,background:bg},
-    navBtn:{display:"flex",alignItems:"center",padding:"11px 14px",background:"transparent",border:"none",color:txt3,cursor:"pointer",fontSize:10,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.04em",whiteSpace:"nowrap",borderBottom:"2px solid transparent",transition:"all 0.15s"},
-    navA:{color:"#f59e0b",borderBottom:"2px solid #f59e0b"},
-    card:{background:cardBg,border:`1px solid ${border}`,borderRadius:8,padding:16,overflow:"hidden"},
-    ch:{display:"flex",alignItems:"center",gap:6,marginBottom:16,flexWrap:"wrap"},
-    ct:{fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",color:dark?"rgba(255,255,255,0.45)":"rgba(0,0,0,0.45)",letterSpacing:"0.08em",fontWeight:500},
-    cs:{fontSize:8,fontFamily:"'IBM Plex Mono',monospace",color:txt4},
-    badge:{padding:"2px 7px",borderRadius:4,fontSize:8,fontFamily:"'IBM Plex Mono',monospace"},
-    statBox:{padding:14,background:statBg,border:`1px solid ${border}`,borderRadius:6},
-    sl:{fontSize:8,fontFamily:"'IBM Plex Mono',monospace",color:dark?"rgba(255,255,255,0.27)":"rgba(0,0,0,0.35)",letterSpacing:"0.1em",marginBottom:6,textTransform:"uppercase"},
-    pBtn:{display:"flex",alignItems:"center",gap:10,width:"100%",padding:"10px 12px",background:pBtnBg,border:`1px solid ${border}`,borderRadius:6,color:txt2,cursor:"pointer",textAlign:"left",marginBottom:6,transition:"all 0.15s"},
-    pBtnA:{background:"rgba(245,158,11,0.07)",border:"1px solid rgba(245,158,11,0.22)",color:"#f59e0b"},
-    mapBtn:{background:dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.05)",border:`1px solid ${border2}`,color:txt2,cursor:"pointer",borderRadius:4,padding:"4px 9px",fontSize:11,fontFamily:"'IBM Plex Mono',monospace",transition:"all 0.15s"},
-    exportBtn:{background:dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.04)",border:`1px solid ${border2}`,color:txt2,cursor:"pointer",borderRadius:4,padding:"4px 10px",fontSize:8.5,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.05em",transition:"all 0.15s"},
-  };
-};
