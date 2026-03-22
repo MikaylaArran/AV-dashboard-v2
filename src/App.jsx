@@ -190,7 +190,7 @@ const Tip = ({text}) => {
     <span style={{position:"relative",display:"inline-flex",alignItems:"center",marginLeft:5}}
       onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)}>
       <span style={{width:13,height:13,borderRadius:"50%",background:"rgba(255,255,255,0.07)",border:"1px solid rgba(255,255,255,0.15)",display:"inline-flex",alignItems:"center",justifyContent:"center",fontSize:7.5,color:"rgba(255,255,255,0.4)",cursor:"help",fontStyle:"italic",fontFamily:"Georgia,serif"}}>i</span>
-      {show&&<div style={{position:"absolute",left:18,top:-4,width:240,background:"#131320",border:"1px solid rgba(255,255,255,0.12)",borderRadius:6,padding:"9px 11px",fontSize:10,color:S.txt2,zIndex:999,lineHeight:1.6,fontFamily:"'IBM Plex Mono',monospace",boxShadow:"0 8px 24px rgba(0,0,0,0.6)"}}>{text}</div>}
+      {show&&<div style={{position:"absolute",left:18,top:-4,width:240,background:"#131320",border:"1px solid rgba(255,255,255,0.12)",borderRadius:6,padding:"9px 11px",fontSize:10,color:"rgba(255,255,255,0.7)",zIndex:999,lineHeight:1.6,fontFamily:"'IBM Plex Mono',monospace",boxShadow:"0 8px 24px rgba(0,0,0,0.6)"}}>{text}</div>}
     </span>
   );
 };
@@ -268,7 +268,8 @@ const useCountryGDELT = (countryName) => {
 };
 
 /* ─── COUNTRY INTELLIGENCE PANEL ────────── */
-const IntelPanel = ({country, onClose}) => {
+const IntelPanel = ({country, onClose, darkMode=true}) => {
+  const S = getStyles(darkMode);
   const [copied,setCopied]=useState(false);
   const ctx=COUNTRY_CONTEXT[country.id];
   const col=riskColor(country.risk);
@@ -770,10 +771,11 @@ const NarrativeTab = ({TOPICS,COUNTRIES,articles,gdeltLoading,gdeltError,updated
 ═══════════════════════════════════════════ */
 
 /* ─── LEAFLET MAP COMPONENT ──────────────── */
-const LeafletMap = ({ countries, selected, onSelect }) => {
+const LeafletMap = ({ countries, selected, onSelect, darkMode }) => {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const layersRef = useRef({});
+  const tileLayerRef = useRef(null);
 
   const riskColorLeaflet = v => v>=75?"#ef4444":v>=55?"#f59e0b":v>=35?"#eab308":"#22c55e";
 
@@ -792,7 +794,6 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
       const L = window.L;
       if (!L) return;
 
-      // Dark tile layer
       const map = L.map(mapRef.current, {
         center: [20, 10],
         zoom: 2,
@@ -802,9 +803,9 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
         attributionControl: false,
       });
 
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19,
-      }).addTo(map);
+      const darkTile = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png';
+      const lightTile = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
+      tileLayerRef.current = L.tileLayer(darkMode ? darkTile : lightTile, { maxZoom: 19 }).addTo(map);
 
       mapInstanceRef.current = map;
       map.on('click', () => {}); // prevent default marker
@@ -837,9 +838,9 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
               const mappedId = NAME_TO_ID[name] || '';
               const country = countries.find(c => c.id === mappedId);
               return {
-                fillColor: country ? riskColorLeaflet(country.risk) : '#1a1a2e',
-                fillOpacity: country ? 0.6 : 0.3,
-                color: country ? riskColorLeaflet(country.risk) : '#333',
+                fillColor: country ? riskColorLeaflet(country.risk) : (darkMode?'#1a1a2e':'#d4d8dd'),
+                fillOpacity: country ? 0.65 : 0.4,
+                color: country ? riskColorLeaflet(country.risk) : (darkMode?'#333':'#b0b5bc'),
                 weight: 0.5,
                 opacity: 0.8,
               };
@@ -872,7 +873,7 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
             const label = L.marker([c.lat, c.lon], {
               icon: L.divIcon({
                 className: '',
-                html: `<div style="font-family:'IBM Plex Sans',sans-serif;font-size:9px;font-weight:600;color:rgba(255,255,255,0.8);text-shadow:0 1px 3px rgba(0,0,0,0.9),0 0 8px rgba(0,0,0,1);white-space:nowrap;pointer-events:none;letter-spacing:0.02em">${c.name}</div>`,
+                html: `<div style="font-family:'IBM Plex Sans',sans-serif;font-size:9px;font-weight:600;color:${darkMode?"rgba(255,255,255,0.85)":"rgba(0,0,0,0.75)"};text-shadow:${darkMode?"0 1px 3px rgba(0,0,0,0.9)":"0 1px 2px rgba(255,255,255,0.9)"};white-space:nowrap;pointer-events:none;letter-spacing:0.02em">${c.name}</div>`,
                 iconSize: [100, 14],
                 iconAnchor: [50, 7],
               }),
@@ -919,20 +920,42 @@ const LeafletMap = ({ countries, selected, onSelect }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
+  // Swap tile layer when darkMode changes
+  useEffect(() => {
+    const L = window.L;
+    if (!L || !mapInstanceRef.current || !tileLayerRef.current) return;
+    const darkTile = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png';
+    const lightTile = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
+    mapInstanceRef.current.removeLayer(tileLayerRef.current);
+    tileLayerRef.current = L.tileLayer(darkMode ? darkTile : lightTile, { maxZoom: 19 });
+    tileLayerRef.current.addTo(mapInstanceRef.current);
+    tileLayerRef.current.bringToBack();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [darkMode]);
+
+  const tooltipBg    = darkMode ? '#0d0d1a' : '#ffffff';
+  const tooltipTxt   = darkMode ? '#fff'    : '#0f0f1a';
+  const tooltipBdr   = darkMode ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)';
+  const zoomBg       = darkMode ? '#111118' : '#ffffff';
+  const zoomTxt      = darkMode ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)';
+  const zoomBdr      = darkMode ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)';
+  const mapBg        = darkMode ? '#0d0d1a' : '#e8ecf0';
+
   return (
     <div>
       <style>{`
-        .leaflet-control-zoom { border: 1px solid rgba(255,255,255,0.15) !important; }
-        .leaflet-control-zoom a { background: #111118 !important; color: rgba(255,255,255,0.7) !important; border-color: rgba(255,255,255,0.15) !important; }
-        .leaflet-control-zoom a:hover { background: #1e1e2e !important; color: #f59e0b !important; }
+        .leaflet-control-zoom { border: 1px solid ${zoomBdr} !important; }
+        .leaflet-control-zoom a { background: ${zoomBg} !important; color: ${zoomTxt} !important; border-color: ${zoomBdr} !important; }
+        .leaflet-control-zoom a:hover { background: ${darkMode?'#1e1e2e':'#f0f1f3'} !important; color: #f59e0b !important; }
         .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-div-icon { display: none !important; }
-        .leaflet-tooltip { background: #0d0d1a !important; border: 1px solid rgba(255,255,255,0.15) !important; border-radius: 4px !important; color: #fff !important; font-family: 'IBM Plex Mono', monospace !important; font-size: 11px !important; padding: 6px 10px !important; box-shadow: 0 4px 16px rgba(0,0,0,0.6) !important; }
+        .leaflet-tooltip { background: ${tooltipBg} !important; border: 1px solid ${tooltipBdr} !important; border-radius: 4px !important; color: ${tooltipTxt} !important; font-family: 'IBM Plex Mono', monospace !important; font-size: 11px !important; padding: 6px 10px !important; box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important; }
         .leaflet-tooltip::before { display: none !important; }
         .leaflet-attribution-flag { display: none !important; }
         .leaflet-control-attribution { display: none !important; }
         .leaflet-container a.leaflet-active { display: none !important; }
+        .leaflet-container { background: ${mapBg} !important; }
       `}</style>
-      <div ref={mapRef} style={{ height: 400, width: '100%', background: '#0d0d1a', zIndex: 0, position: 'relative' }} />
+      <div ref={mapRef} style={{ height: 400, width: '100%', background: mapBg, zIndex: 0, position: 'relative' }} />
     </div>
   );
 };
@@ -1072,7 +1095,7 @@ export default function App() {
               </div>
 
               {/* Leaflet map */}
-              <LeafletMap countries={filtered} selected={sel} onSelect={setSel}/>
+              <LeafletMap countries={filtered} selected={sel} onSelect={setSel} darkMode={darkMode}/>
 
               {/* Map bottom bar */}
               <div style={{display:"flex",gap:20,padding:"10px 16px",borderTop:"1px solid rgba(255,255,255,0.04)",alignItems:"center"}}>
@@ -1991,7 +2014,7 @@ export default function App() {
           boxShadow:"-12px 0 48px rgba(0,0,0,0.8)",
           animation:"slideIn 0.2s ease",
         }}>
-          <IntelPanel country={country} onClose={()=>setSel(null)}/>
+          <IntelPanel country={country} onClose={()=>setSel(null)} darkMode={darkMode}/>
         </div>
       )}
     </div>
