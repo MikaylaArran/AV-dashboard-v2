@@ -18,21 +18,21 @@ const getStyles = (dark) => {
     bg, bg2, bg3, txt, txt2, txt3, txt4,
     root:{background:bg,minHeight:"100vh",color:txt,fontFamily:"'IBM Plex Sans',sans-serif",fontSize:13,transition:"background 0.2s,color 0.2s"},
     header:{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 24px",borderBottom:`1px solid ${border}`,background:bg,position:"sticky",top:0,zIndex:100,flexWrap:"wrap",gap:10},
-    chip:{display:"flex",alignItems:"center",gap:5,padding:"4px 11px",background:dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.05)",border:`1px solid ${border}`,borderRadius:20,fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",color:txt3},
+    chip:{display:"flex",alignItems:"center",gap:5,padding:"4px 11px",background:dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.05)",border:`1px solid ${border}`,borderRadius:0,fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",color:txt3},
     nav:{display:"flex",overflowX:"auto",borderBottom:`1px solid ${border}`,padding:"0 24px",gap:2,background:bg},
     navBtn:{display:"flex",alignItems:"center",padding:"11px 14px",background:"transparent",border:"none",color:txt3,cursor:"pointer",fontSize:10,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.04em",whiteSpace:"nowrap",borderBottom:"2px solid transparent",transition:"all 0.15s"},
     navA:{color:"#f59e0b",borderBottom:"2px solid #f59e0b"},
-    card:{background:cardBg,border:`1px solid ${border}`,borderRadius:8,padding:16,overflow:"hidden"},
+    card:{background:cardBg,border:`1px solid ${border}`,borderRadius:0,padding:16,overflow:"hidden"},
     ch:{display:"flex",alignItems:"center",gap:6,marginBottom:16,flexWrap:"wrap"},
     ct:{fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",color:dark?"rgba(255,255,255,0.45)":"rgba(0,0,0,0.45)",letterSpacing:"0.08em",fontWeight:500},
     cs:{fontSize:8,fontFamily:"'IBM Plex Mono',monospace",color:txt4},
-    badge:{padding:"2px 7px",borderRadius:4,fontSize:8,fontFamily:"'IBM Plex Mono',monospace"},
-    statBox:{padding:14,background:statBg,border:`1px solid ${border}`,borderRadius:6},
+    badge:{padding:"2px 7px",borderRadius:0,fontSize:8,fontFamily:"'IBM Plex Mono',monospace"},
+    statBox:{padding:14,background:statBg,border:`1px solid ${border}`,borderRadius:0},
     sl:{fontSize:8,fontFamily:"'IBM Plex Mono',monospace",color:dark?"rgba(255,255,255,0.27)":"rgba(0,0,0,0.35)",letterSpacing:"0.1em",marginBottom:6,textTransform:"uppercase"},
-    pBtn:{display:"flex",alignItems:"center",gap:10,width:"100%",padding:"10px 12px",background:pBtnBg,border:`1px solid ${border}`,borderRadius:6,color:txt2,cursor:"pointer",textAlign:"left",marginBottom:6,transition:"all 0.15s"},
+    pBtn:{display:"flex",alignItems:"center",gap:10,width:"100%",padding:"10px 12px",background:pBtnBg,border:`1px solid ${border}`,borderRadius:0,color:txt2,cursor:"pointer",textAlign:"left",marginBottom:6,transition:"all 0.15s"},
     pBtnA:{background:"rgba(245,158,11,0.07)",border:"1px solid rgba(245,158,11,0.22)",color:"#f59e0b"},
-    mapBtn:{background:dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.05)",border:`1px solid ${border2}`,color:txt2,cursor:"pointer",borderRadius:4,padding:"4px 9px",fontSize:11,fontFamily:"'IBM Plex Mono',monospace",transition:"all 0.15s"},
-    exportBtn:{background:dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.04)",border:`1px solid ${border2}`,color:txt2,cursor:"pointer",borderRadius:4,padding:"4px 10px",fontSize:8.5,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.05em",transition:"all 0.15s"},
+    mapBtn:{background:dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.05)",border:`1px solid ${border2}`,color:txt2,cursor:"pointer",borderRadius:0,padding:"4px 9px",fontSize:11,fontFamily:"'IBM Plex Mono',monospace",transition:"all 0.15s"},
+    exportBtn:{background:dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.04)",border:`1px solid ${border2}`,color:txt2,cursor:"pointer",borderRadius:0,padding:"4px 10px",fontSize:8.5,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.05em",transition:"all 0.15s"},
   };
 };
 
@@ -226,15 +226,15 @@ const Tip = ({text}) => {
   return(
     <span style={{position:"relative",display:"inline-flex",alignItems:"center",marginLeft:5}}
       onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)}>
-      <span style={{width:13,height:13,borderRadius:"50%",background:"rgba(255,255,255,0.07)",border:"1px solid rgba(255,255,255,0.15)",display:"inline-flex",alignItems:"center",justifyContent:"center",fontSize:7.5,color:"rgba(255,255,255,0.4)",cursor:"help",fontStyle:"italic",fontFamily:"Georgia,serif"}}>i</span>
-      {show&&<div style={{position:"absolute",left:18,top:-4,width:240,background:"#131320",border:"1px solid rgba(255,255,255,0.12)",borderRadius:6,padding:"9px 11px",fontSize:10,color:"rgba(255,255,255,0.7)",zIndex:999,lineHeight:1.6,fontFamily:"'IBM Plex Mono',monospace",boxShadow:"0 8px 24px rgba(0,0,0,0.6)"}}>{text}</div>}
+      <span style={{width:13,height:13,borderRadius:0,background:"rgba(255,255,255,0.07)",border:"1px solid rgba(255,255,255,0.15)",display:"inline-flex",alignItems:"center",justifyContent:"center",fontSize:7.5,color:"rgba(255,255,255,0.4)",cursor:"help",fontStyle:"italic",fontFamily:"Georgia,serif"}}>i</span>
+      {show&&<div style={{position:"absolute",left:18,top:-4,width:240,background:"#131320",border:"1px solid rgba(255,255,255,0.12)",borderRadius:0,padding:"9px 11px",fontSize:10,color:"rgba(255,255,255,0.7)",zIndex:999,lineHeight:1.6,fontFamily:"'IBM Plex Mono',monospace",boxShadow:"0 8px 24px rgba(0,0,0,0.6)"}}>{text}</div>}
     </span>
   );
 };
 
 const Bar = ({val,color,h=3}) => (
-  <div style={{height:h,background:"rgba(255,255,255,0.07)",borderRadius:2,overflow:"hidden"}}>
-    <div style={{height:"100%",width:`${Math.min(100,val)}%`,background:color||riskColor(val),borderRadius:2,transition:"width 0.5s ease"}}/>
+  <div style={{height:h,background:"rgba(255,255,255,0.07)",borderRadius:0,overflow:"hidden"}}>
+    <div style={{height:"100%",width:`${Math.min(100,val)}%`,background:color||riskColor(val),borderRadius:0,transition:"width 0.5s ease"}}/>
   </div>
 );
 
@@ -379,7 +379,7 @@ Generated by Democracy Dashboard (AlgoViva)`;
   const sigColor=l=>l==="CRITICAL"?"#ef4444":l==="ELEVATED"?"#f59e0b":"#22c55e";
 
   return(
-    <div style={{background:"#0d0d1a",border:`1px solid ${col}33`,borderTop:`3px solid ${col}`,borderRadius:8,display:"flex",flexDirection:"column",height:"100%",animation:"slideIn 0.2s ease",overflow:"hidden"}}>
+    <div style={{background:"#0d0d1a",border:`1px solid ${col}33`,borderTop:`3px solid ${col}`,borderRadius:0,display:"flex",flexDirection:"column",height:"100%",animation:"slideIn 0.2s ease",overflow:"hidden"}}>
 
       {/* Header */}
       <div style={{padding:"12px 14px",borderBottom:`1px solid ${S.dark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.08)"}`,background:S.bg3}}>
@@ -393,7 +393,7 @@ Generated by Democracy Dashboard (AlgoViva)`;
               <div style={{fontSize:38,fontWeight:700,color:col,fontFamily:"'IBM Plex Sans',sans-serif",lineHeight:1}}>{country.risk}</div>
               <div style={{fontSize:8,color:col,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.08em"}}>{riskLabel(country.risk)}</div>
             </div>
-            <button onClick={onClose} style={{background:S.bg3,border:"1px solid rgba(255,255,255,0.1)",color:S.txt3,cursor:"pointer",borderRadius:4,width:22,height:22,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginTop:4}}>✕</button>
+            <button onClick={onClose} style={{background:S.bg3,border:"1px solid rgba(255,255,255,0.1)",color:S.txt3,cursor:"pointer",borderRadius:0,width:22,height:22,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginTop:4}}>✕</button>
           </div>
         </div>
 
@@ -423,12 +423,12 @@ Generated by Democracy Dashboard (AlgoViva)`;
 
         {/* Why this score */}
         {ctx?(
-          <div style={{padding:12,background:riskBg(country.risk),borderRadius:5,border:`1px solid ${col}22`}}>
+          <div style={{padding:12,background:riskBg(country.risk),borderRadius:0,border:`1px solid ${col}22`}}>
             <div style={{fontSize:7.5,color:col,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.08em",marginBottom:4}}>INTELLIGENCE ASSESSMENT</div>
             <div style={{fontSize:10,color:S.txt2,fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.7}}>{ctx.why}</div>
           </div>
         ):(
-          <div style={{padding:10,background:S.bg3,borderRadius:5,border:`1px solid ${S.dark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.08)"}`}}>
+          <div style={{padding:10,background:S.bg3,borderRadius:0,border:`1px solid ${S.dark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.08)"}`}}>
             <div style={{fontSize:7.5,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.08em",marginBottom:4}}>INTELLIGENCE ASSESSMENT</div>
             <div style={{fontSize:9.5,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",fontStyle:"italic"}}>Detailed assessment not available for this country. Scores derived from V-Dem, Freedom House, ACLED, RSF and TI indices.</div>
           </div>
@@ -439,13 +439,13 @@ Generated by Democracy Dashboard (AlgoViva)`;
           <div style={{fontSize:7.5,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.08em",marginBottom:6}}>ACTIVE SIGNALS ({signals.filter(s=>s.level!=="STABLE").length} firing)</div>
           <div style={{display:"flex",flexDirection:"column",gap:4}}>
             {signals.map((s,i)=>(
-              <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 12px",background:S.bg3,borderRadius:4,borderLeft:`2px solid ${sigColor(s.level)}`}}>
+              <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 12px",background:S.bg3,borderRadius:0,borderLeft:`2px solid ${sigColor(s.level)}`}}>
                 <span style={{fontSize:12,flexShrink:0}}>{s.icon}</span>
                 <div style={{flex:1,minWidth:0}}>
                   <div style={{fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",color:S.txt2}}>{s.label}</div>
                   <div style={{fontSize:7.5,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace"}}>{s.src}</div>
                 </div>
-                <span style={{fontSize:7.5,padding:"1px 5px",borderRadius:3,background:`${sigColor(s.level)}18`,color:sigColor(s.level),fontFamily:"'IBM Plex Mono',monospace",flexShrink:0,border:`1px solid ${sigColor(s.level)}33`}}>{s.level}</span>
+                <span style={{fontSize:7.5,padding:"1px 5px",borderRadius:0,background:`${sigColor(s.level)}18`,color:sigColor(s.level),fontFamily:"'IBM Plex Mono',monospace",flexShrink:0,border:`1px solid ${sigColor(s.level)}33`}}>{s.level}</span>
               </div>
             ))}
           </div>
@@ -461,7 +461,7 @@ Generated by Democracy Dashboard (AlgoViva)`;
             {daily.map((d,i)=>(
               <div key={i} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:2}}>
                 <div style={{fontSize:7,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace"}}>{d.events||"0"}</div>
-                <div style={{width:"100%",background:col,borderRadius:"2px 2px 0 0",height:`${Math.max(4,(d.events/maxEvts)*36)}px`,opacity:0.6+i*0.06,transition:"height 0.3s ease"}}/>
+                <div style={{width:"100%",background:col,borderRadius:0,height:`${Math.max(4,(d.events/maxEvts)*36)}px`,opacity:0.6+i*0.06,transition:"height 0.3s ease"}}/>
                 <div style={{fontSize:6.5,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",whiteSpace:"nowrap"}}>{d.day}</div>
               </div>
             ))}
@@ -494,7 +494,7 @@ Generated by Democracy Dashboard (AlgoViva)`;
               ["Transparency Int.",country.ti!=null?country.ti+"/100":null,"TI CPI 2024"],
               ["Youth Unemployment",country.youth_unemp!=null?country.youth_unemp+"%":null,"ILO 2023"],
             ].map(([l,v,s])=>(
-              <div key={l} style={{padding:"10px 12px",background:S.bg3,borderRadius:4}}>
+              <div key={l} style={{padding:"10px 12px",background:S.bg3,borderRadius:0}}>
                 <div style={{fontSize:7.5,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace"}}>{l}</div>
                 {v!=null?(
                   <div style={{fontSize:12,fontWeight:600,fontFamily:"'IBM Plex Mono',monospace",color:S.txt2,marginTop:1}}>{v}</div>
@@ -532,25 +532,25 @@ Generated by Democracy Dashboard (AlgoViva)`;
           </div>
 
           {newsError==="NO_DATA"&&(
-            <div style={{padding:12,background:S.bg3,border:`1px solid ${S.dark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.08)"}`,borderRadius:5,textAlign:"center"}}>
+            <div style={{padding:12,background:S.bg3,border:`1px solid ${S.dark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.08)"}`,borderRadius:0,textAlign:"center"}}>
               <div style={{fontSize:9.5,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace"}}>No news articles found for {country.name} in the past 7 days</div>
               <div style={{fontSize:8,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",marginTop:3}}>Source: GDELT Document API</div>
             </div>
           )}
           {newsError==="UNAVAILABLE"&&(
-            <div style={{padding:12,background:"rgba(245,158,11,0.06)",border:"1px solid rgba(245,158,11,0.18)",borderRadius:6}}>
+            <div style={{padding:12,background:"rgba(245,158,11,0.06)",border:"1px solid rgba(245,158,11,0.18)",borderRadius:0}}>
               <div style={{fontSize:9.5,color:"rgba(255,255,255,0.4)",fontFamily:"'IBM Plex Mono',monospace"}}>⚠ GDELT API unavailable at this time</div>
               <div style={{fontSize:8,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",marginTop:2}}>Live news data cannot be retrieved. Check gdeltproject.org for status.</div>
             </div>
           )}
           {!newsError&&!newsLoading&&articles.length===0&&(
-            <div style={{padding:12,background:S.bg3,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`,borderRadius:5,textAlign:"center"}}>
+            <div style={{padding:12,background:S.bg3,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`,borderRadius:0,textAlign:"center"}}>
               <div style={{fontSize:9,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",fontStyle:"italic"}}>Fetching live news…</div>
             </div>
           )}
           <div style={{display:"flex",flexDirection:"column",gap:6}}>
             {articles.map((a,i)=>(
-              <div key={i} style={{padding:"8px 10px",background:S.bg3,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`,borderRadius:4,borderLeft:`2px solid ${col}`,animation:"fadeIn 0.3s ease"}}>
+              <div key={i} style={{padding:"8px 10px",background:S.bg3,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`,borderRadius:0,borderLeft:`2px solid ${col}`,animation:"fadeIn 0.3s ease"}}>
                 <a href={a.url} target="_blank" rel="noopener noreferrer"
                   style={{fontSize:10,fontWeight:500,fontFamily:"'IBM Plex Sans',sans-serif",color:S.txt2,lineHeight:1.4,display:"block",marginBottom:4}}>
                   {a.title}
@@ -650,7 +650,7 @@ const NarrativeTab = ({TOPICS,COUNTRIES,articles,gdeltLoading,gdeltError,updated
               <div style={{display:"flex",gap:4}}>
                 {[["24h","24h"],["7d","7 days"],["30d","30 days"]].map(([v,l])=>(
                   <button key={v} onClick={()=>setTimespan(v)}
-                    style={{padding:"4px 9px",background:timespan===v?"rgba(245,158,11,0.12)":"rgba(255,255,255,0.04)",border:timespan===v?"1px solid rgba(245,158,11,0.35)":"1px solid rgba(255,255,255,0.08)",borderRadius:4,color:timespan===v?"#f59e0b":"rgba(255,255,255,0.45)",cursor:"pointer",fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace"}}>
+                    style={{padding:"4px 9px",background:timespan===v?"rgba(245,158,11,0.12)":"rgba(255,255,255,0.04)",border:timespan===v?"1px solid rgba(245,158,11,0.35)":"1px solid rgba(255,255,255,0.08)",borderRadius:0,color:timespan===v?"#f59e0b":"rgba(255,255,255,0.45)",cursor:"pointer",fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace"}}>
                     {l}
                   </button>
                 ))}
@@ -666,7 +666,7 @@ const NarrativeTab = ({TOPICS,COUNTRIES,articles,gdeltLoading,gdeltError,updated
           <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
             {TOPICS.map(t=>(
               <button key={t.id} onClick={()=>setSelTopic(t.id)}
-                style={{padding:"5px 11px",borderRadius:20,border:`1px solid ${selTopic===t.id?t.color+"66":"rgba(255,255,255,0.08)"}`,background:selTopic===t.id?t.color+"18":"rgba(255,255,255,0.03)",color:selTopic===t.id?t.color:"rgba(255,255,255,0.4)",cursor:"pointer",fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",whiteSpace:"nowrap",transition:"all 0.15s"}}>
+                style={{padding:"5px 11px",borderRadius:0,border:`1px solid ${selTopic===t.id?t.color+"66":"rgba(255,255,255,0.08)"}`,background:selTopic===t.id?t.color+"18":"rgba(255,255,255,0.03)",color:selTopic===t.id?t.color:"rgba(255,255,255,0.4)",cursor:"pointer",fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",whiteSpace:"nowrap",transition:"all 0.15s"}}>
                 {t.label}
               </button>
             ))}
@@ -679,13 +679,13 @@ const NarrativeTab = ({TOPICS,COUNTRIES,articles,gdeltLoading,gdeltError,updated
             <span style={S.ct}>
               {selCountry!=="all"&&countryObj?countryObj.name.toUpperCase()+" · ":""}{topic.label.toUpperCase()}
             </span>
-            <span style={{fontSize:7.5,padding:"2px 7px",borderRadius:3,background:`${topic.color}18`,color:topic.color,fontFamily:"'IBM Plex Mono',monospace",border:`1px solid ${topic.color}33`}}>{timespan}</span>
+            <span style={{fontSize:7.5,padding:"2px 7px",borderRadius:0,background:`${topic.color}18`,color:topic.color,fontFamily:"'IBM Plex Mono',monospace",border:`1px solid ${topic.color}33`}}>{timespan}</span>
             {results.length>0&&<span style={{...S.cs,marginLeft:"auto"}}>{results.length} articles · GDELT</span>}
           </div>
 
           {/* Error states */}
           {err==="NO_DATA"&&(
-            <div style={{textAlign:"center",padding:"32px 16px",background:S.bg3,borderRadius:6,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`}}>
+            <div style={{textAlign:"center",padding:"32px 16px",background:S.bg3,borderRadius:0,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`}}>
               <div style={{fontSize:22,marginBottom:8,opacity:0.3}}>◎</div>
               <div style={{fontSize:11,color:S.txt3,fontFamily:"'IBM Plex Mono',monospace",marginBottom:4}}>
                 No articles found for {selCountry!=="all"&&countryObj?countryObj.name:"all countries"} · {topic.label}
@@ -696,7 +696,7 @@ const NarrativeTab = ({TOPICS,COUNTRIES,articles,gdeltLoading,gdeltError,updated
             </div>
           )}
           {err==="UNAVAILABLE"&&(
-            <div style={{padding:12,background:"rgba(245,158,11,0.06)",border:"1px solid rgba(245,158,11,0.18)",borderRadius:6}}>
+            <div style={{padding:12,background:"rgba(245,158,11,0.06)",border:"1px solid rgba(245,158,11,0.18)",borderRadius:0}}>
               <div style={{fontSize:10,color:S.txt3,fontFamily:"'IBM Plex Mono',monospace"}}>⚠ GDELT API temporarily unavailable</div>
               <div style={{fontSize:8.5,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",marginTop:3}}>Live news data cannot be retrieved at this time. Check gdeltproject.org for status.</div>
             </div>
@@ -704,9 +704,9 @@ const NarrativeTab = ({TOPICS,COUNTRIES,articles,gdeltLoading,gdeltError,updated
           {loading&&(
             <div style={{display:"flex",flexDirection:"column",gap:16}}>
               {[...Array(5)].map((_,i)=>(
-                <div key={i} style={{padding:12,background:S.bg3,borderRadius:5,border:`1px solid ${S.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.06)"}`}}>
-                  <div style={{height:11,background:S.bg3,borderRadius:3,marginBottom:6,width:`${70+Math.random()*25}%`}}/>
-                  <div style={{height:8,background:S.bg3,borderRadius:3,width:"40%"}}/>
+                <div key={i} style={{padding:12,background:S.bg3,borderRadius:0,border:`1px solid ${S.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.06)"}`}}>
+                  <div style={{height:11,background:S.bg3,borderRadius:0,marginBottom:6,width:`${70+Math.random()*25}%`}}/>
+                  <div style={{height:8,background:S.bg3,borderRadius:0,width:"40%"}}/>
                 </div>
               ))}
             </div>
@@ -715,7 +715,7 @@ const NarrativeTab = ({TOPICS,COUNTRIES,articles,gdeltLoading,gdeltError,updated
           <div style={{display:"flex",flexDirection:"column",gap:7}}>
             {results.map((a,i)=>(
               <a key={i} href={a.url} target="_blank" rel="noopener noreferrer"
-                style={{display:"block",padding:"10px 12px",background:S.bg3,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`,borderRadius:5,borderLeft:`3px solid ${topic.color}`,animation:"fadeIn 0.25s ease",textDecoration:"none",transition:"background 0.15s",cursor:"pointer"}}
+                style={{display:"block",padding:"10px 12px",background:S.bg3,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`,borderRadius:0,borderLeft:`3px solid ${topic.color}`,animation:"fadeIn 0.25s ease",textDecoration:"none",transition:"background 0.15s",cursor:"pointer"}}
                 onMouseEnter={e=>e.currentTarget.style.background="rgba(255,255,255,0.04)"}
                 onMouseLeave={e=>e.currentTarget.style.background="rgba(255,255,255,0.02)"}>
                 <div style={{fontSize:11,fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif",color:"rgba(255,255,255,0.9)",lineHeight:1.45,marginBottom:5}}>
@@ -985,7 +985,7 @@ const LeafletMap = ({ countries, selected, onSelect, darkMode }) => {
         .leaflet-control-zoom a { background: ${zoomBg} !important; color: ${zoomTxt} !important; border-color: ${zoomBdr} !important; }
         .leaflet-control-zoom a:hover { background: ${darkMode?'#1e1e2e':'#f0f1f3'} !important; color: #f59e0b !important; }
         .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-div-icon { display: none !important; }
-        .leaflet-tooltip { background: ${tooltipBg} !important; border: 1px solid ${tooltipBdr} !important; border-radius: 4px !important; color: ${tooltipTxt} !important; font-family: 'IBM Plex Mono', monospace !important; font-size: 11px !important; padding: 6px 10px !important; box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important; }
+        .leaflet-tooltip { background: ${tooltipBg} !important; border: 1px solid ${tooltipBdr} !important; border-radius: 0 !important; color: ${tooltipTxt} !important; font-family: 'IBM Plex Mono', monospace !important; font-size: 11px !important; padding: 6px 10px !important; box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important; }
         .leaflet-tooltip::before { display: none !important; }
         .leaflet-attribution-flag { display: none !important; }
         .leaflet-control-attribution { display: none !important; }
@@ -1052,11 +1052,11 @@ export default function App() {
         body{transition:background 0.2s;}
         ::-webkit-scrollbar{width:4px;height:4px;}
         ::-webkit-scrollbar-track{background:rgba(255,255,255,0.02);}
-        ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px;}
-        input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;outline:none;}
+        ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius: 0;}
+        input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:rgba(255,255,255,0.1);border-radius: 0;outline:none;}
         input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#f59e0b;cursor:pointer;border:2px solid #0a0a0f;}
-        select{background:${darkMode?'#111118':'#f0f1f3'};border:1px solid ${darkMode?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.12)'};color:${darkMode?'rgba(255,255,255,0.65)':'rgba(0,0,0,0.7)'};padding:5px 8px;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;outline:none;cursor:pointer;}
-        input[type=text]{background:${darkMode?'#111118':'#f0f1f3'};border:1px solid ${darkMode?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.12)'};color:${darkMode?'rgba(255,255,255,0.65)':'rgba(0,0,0,0.7)'};padding:5px 10px;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;outline:none;}
+        select{background:${darkMode?'#111118':'#f0f1f3'};border:1px solid ${darkMode?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.12)'};color:${darkMode?'rgba(255,255,255,0.65)':'rgba(0,0,0,0.7)'};padding:5px 8px;border-radius: 0;font-family:'IBM Plex Mono',monospace;font-size:10px;outline:none;cursor:pointer;}
+        input[type=text]{background:${darkMode?'#111118':'#f0f1f3'};border:1px solid ${darkMode?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.12)'};color:${darkMode?'rgba(255,255,255,0.65)':'rgba(0,0,0,0.7)'};padding:5px 10px;border-radius: 0;font-family:'IBM Plex Mono',monospace;font-size:10px;outline:none;}
         a{color:inherit;text-decoration:none;}a:hover{text-decoration:none;}
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
         @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
@@ -1078,12 +1078,12 @@ export default function App() {
           ))}
         </div>
         <div style={{display:"flex",alignItems:"center",gap:12}}>
-          <button onClick={()=>setDarkMode(d=>!d)} style={{display:"flex",alignItems:"center",gap:7,padding:"5px 12px",background:darkMode?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.06)",border:`1px solid ${S.dark?"rgba(255,255,255,0.12)":"rgba(0,0,0,0.12)"}`,borderRadius:20,cursor:"pointer",fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",color:S.txt2,transition:"all 0.2s"}}>
+          <button onClick={()=>setDarkMode(d=>!d)} style={{display:"flex",alignItems:"center",gap:7,padding:"5px 12px",background:darkMode?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.06)",border:`1px solid ${S.dark?"rgba(255,255,255,0.12)":"rgba(0,0,0,0.12)"}`,borderRadius:0,cursor:"pointer",fontSize:9.5,fontFamily:"'IBM Plex Mono',monospace",color:S.txt2,transition:"all 0.2s"}}>
             <span style={{fontSize:12}}>{darkMode?"☀":"🌙"}</span>
             <span>{darkMode?"LIGHT":"DARK"}</span>
           </button>
           <div style={{display:"flex",alignItems:"center",gap:6,fontSize:8.5,fontFamily:"'IBM Plex Mono',monospace",color:S.txt4}}>
-          <span style={{width:6,height:6,borderRadius:"50%",background:"#22c55e",display:"inline-block",animation:"blink 2s infinite"}}/>
+          <span style={{width:6,height:6,borderRadius:0,background:"#22c55e",display:"inline-block",animation:"blink 2s infinite"}}/>
           {new Date().toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})}
           </div>
         </div>
@@ -1108,14 +1108,14 @@ export default function App() {
           <div style={{position:"relative"}}>
 
             {/* FULL-WIDTH LEAFLET MAP */}
-            <div style={{background:"#0d0d1a",borderRadius:8,overflow:"hidden",border:`1px solid ${S.dark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.08)"}`,marginBottom:16}}>
+            <div style={{background:"#0d0d1a",borderRadius:0,overflow:"hidden",border:`1px solid ${S.dark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.08)"}`,marginBottom:16}}>
 
               {/* Map top bar */}
               <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"10px 16px",borderBottom:"1px solid rgba(255,255,255,0.05)"}}>
                 <div style={{display:"flex",gap:20,alignItems:"center"}}>
                   {[["HIGH ALERT","#ef4444",">=75"],["ELEVATED","#f59e0b","55-74"],["MONITORING","#eab308","35-54"],["STABLE","#22c55e","<35"]].map(([l,c,r])=>(
                     <div key={l} style={{display:"flex",alignItems:"center",gap:7}}>
-                      <div style={{width:9,height:9,borderRadius:"50%",background:c,boxShadow:`0 0 6px ${c}88`}}/>
+                      <div style={{width:9,height:9,borderRadius:0,background:c,boxShadow:`0 0 6px ${c}88`}}/>
                       <div>
                         <div style={{fontSize:9,fontFamily:"'IBM Plex Mono',monospace",color:c,fontWeight:600,letterSpacing:"0.05em"}}>{l}</div>
                         <div style={{fontSize:7,fontFamily:"'IBM Plex Mono',monospace",color:S.txt4}}>{r}</div>
@@ -1180,15 +1180,15 @@ export default function App() {
                 <span style={{...S.cs,marginLeft:"auto"}}>Democracy Dashboard</span>
               </div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:16,marginBottom:16}}>
-                <div style={{padding:12,background:"rgba(239,68,68,0.05)",borderRadius:6,borderTop:"2px solid #ef4444"}}>
+                <div style={{padding:12,background:"rgba(239,68,68,0.05)",borderRadius:0,borderTop:"2px solid #ef4444"}}>
                   <div style={{fontSize:9,fontWeight:700,color:"#ef4444",fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.06em",marginBottom:6}}>IMMEDIATE CONCERN</div>
                   <p style={{fontSize:9.5,color:S.txt2,fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.8}}>{COUNTRIES.filter(c=>c.risk>=75).length} states at HIGH ALERT. The Sahel cluster (Mali, Burkina Faso, Niger) is the world fastest-deteriorating democratic space - all three post-coup with no electoral roadmap. Sudan and Myanmar remain at catastrophic levels. {COUNTRIES.filter(c=>c.risk>=75&&c.trend<=-5).length} critical states in accelerating decline.</p>
                 </div>
-                <div style={{padding:12,background:"rgba(245,158,11,0.05)",borderRadius:6,borderTop:"2px solid #f59e0b"}}>
+                <div style={{padding:12,background:"rgba(245,158,11,0.05)",borderRadius:0,borderTop:"2px solid #f59e0b"}}>
                   <div style={{fontSize:9,fontWeight:700,color:"#f59e0b",fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.06em",marginBottom:6}}>STRUCTURAL TRENDS</div>
                   <p style={{fontSize:9.5,color:S.txt2,fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.8}}>Global average risk: {avgRisk}/100 - up from 54 in 2022. {COUNTRIES.filter(c=>c.trend<=-5).length} states in accelerating decline vs {COUNTRIES.filter(c=>c.trend>=3).length} improving. Youth unemployment (avg {Math.round(COUNTRIES.reduce((a,c)=>a+c.youth_unemp,0)/COUNTRIES.length)}% in high-risk states) is the strongest leading indicator. Digital repression expanding in East Asia and Central Africa.</p>
                 </div>
-                <div style={{padding:12,background:"rgba(34,197,94,0.05)",borderRadius:6,borderTop:"2px solid #22c55e"}}>
+                <div style={{padding:12,background:"rgba(34,197,94,0.05)",borderRadius:0,borderTop:"2px solid #22c55e"}}>
                   <div style={{fontSize:9,fontWeight:700,color:"#22c55e",fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.06em",marginBottom:6}}>STRATEGIC OPPORTUNITIES</div>
                   <p style={{fontSize:9.5,color:S.txt2,fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.8}}>{COUNTRIES.filter(c=>c.risk<35).length} states rated STABLE. South Africa GNU coalition (2024) signals democratic resilience in sub-Saharan Africa. Kenya Gen Z movement demonstrated civic mobilisation capacity. {COUNTRIES.filter(c=>c.trend>=3).length} states on improving trajectories.</p>
                 </div>
@@ -1199,7 +1199,7 @@ export default function App() {
                   {label:"FASTEST DECLINING",val:[...COUNTRIES].sort((a,b)=>a.trend-b.trend)[0].name,sub:[...COUNTRIES].sort((a,b)=>a.trend-b.trend)[0].trend+" pts/yr",c:"#f97316"},
                   {label:"ESCALATION PROB.",val:Math.round(COUNTRIES.filter(c=>c.risk>=75).length/COUNTRIES.length*100)+"%",sub:"12-month window CI 8%",c:"#f59e0b"},
                 ].map((s,i)=>(
-                  <div key={i} style={{padding:"10px 12px",background:S.bg3,borderRadius:5,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`}}>
+                  <div key={i} style={{padding:"10px 12px",background:S.bg3,borderRadius:0,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`}}>
                     <div style={{fontSize:7.5,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.08em",marginBottom:4}}>{s.label}</div>
                     <div style={{fontSize:16,fontWeight:700,color:s.c,fontFamily:"'IBM Plex Sans',sans-serif"}}>{s.val}</div>
                     <div style={{fontSize:8,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",marginTop:1}}>{s.sub}</div>
@@ -1256,7 +1256,7 @@ export default function App() {
                     <Bar val={v} color="#f59e0b"/>
                   </div>
                 ))}
-                <div style={{marginTop:12,padding:"10px 12px",background:"rgba(245,158,11,0.05)",borderRadius:4,border:"1px solid rgba(245,158,11,0.12)"}}>
+                <div style={{marginTop:12,padding:"10px 12px",background:"rgba(245,158,11,0.05)",borderRadius:0,border:"1px solid rgba(245,158,11,0.12)"}}>
                   <div style={{fontSize:8.5,color:"rgba(255,255,255,0.4)",fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.7}}>
                     Model: Bayesian logistic regression · V-Dem 2024 + ACLED 2024 + IMF WEO 2024.<br/>
                     {COUNTRIES.filter(c=>c.trend<=-5).length} states in accelerating decline · {COUNTRIES.filter(c=>c.risk>=75&&c.trend<0).length} critical + deteriorating
@@ -1317,7 +1317,7 @@ export default function App() {
                     src:"FH 2024 · V-Dem 2024 · CIVICUS 2024"
                   },
                 ].map((b,i)=>(
-                  <div key={i} style={{padding:14,background:S.bg3,borderRadius:6,border:`1px solid ${b.color}1a`,borderTop:`2px solid ${b.color}`}}>
+                  <div key={i} style={{padding:14,background:S.bg3,borderRadius:0,border:`1px solid ${b.color}1a`,borderTop:`2px solid ${b.color}`}}>
                     <div style={{display:"flex",alignItems:"center",gap:7,marginBottom:8}}>
                       <span style={{fontSize:15}}>{b.icon}</span>
                       <span style={{fontSize:10,fontWeight:700,color:b.color,fontFamily:"'IBM Plex Sans',sans-serif",letterSpacing:"0.03em"}}>{b.heading}</span>
@@ -1338,7 +1338,7 @@ export default function App() {
                 </div>
                 {[...COUNTRIES].sort((a,b)=>b.trend-a.trend).slice(0,5).map((c,i)=>(
                   <div key={c.id} onClick={()=>setSel(c.id)} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 0",borderBottom:`1px solid ${S.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.07)"}`,cursor:"pointer"}}>
-                    <div style={{width:20,height:20,borderRadius:"50%",background:"rgba(34,197,94,0.1)",border:"1px solid rgba(34,197,94,0.25)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:8,color:"#22c55e",flexShrink:0,fontFamily:"'IBM Plex Mono',monospace"}}>{i+1}</div>
+                    <div style={{width:20,height:20,borderRadius:0,background:"rgba(34,197,94,0.1)",border:"1px solid rgba(34,197,94,0.25)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:8,color:"#22c55e",flexShrink:0,fontFamily:"'IBM Plex Mono',monospace"}}>{i+1}</div>
                     <div style={{flex:1}}>
                       <div style={{fontSize:11,fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif"}}>{c.name}</div>
                       <div style={{fontSize:8,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace"}}>{c.region}</div>
@@ -1358,7 +1358,7 @@ export default function App() {
                 </div>
                 {[...COUNTRIES].sort((a,b)=>a.trend-b.trend).slice(0,5).map((c,i)=>(
                   <div key={c.id} onClick={()=>setSel(c.id)} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 0",borderBottom:`1px solid ${S.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.07)"}`,cursor:"pointer"}}>
-                    <div style={{width:20,height:20,borderRadius:"50%",background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.25)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:8,color:"#ef4444",flexShrink:0,fontFamily:"'IBM Plex Mono',monospace"}}>{i+1}</div>
+                    <div style={{width:20,height:20,borderRadius:0,background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.25)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:8,color:"#ef4444",flexShrink:0,fontFamily:"'IBM Plex Mono',monospace"}}>{i+1}</div>
                     <div style={{flex:1}}>
                       <div style={{fontSize:11,fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif"}}>{c.name}</div>
                       <div style={{fontSize:8,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace"}}>{c.region}</div>
@@ -1384,7 +1384,7 @@ export default function App() {
                   const worst=[...COUNTRIES].sort((a,b)=>b[k]-a[k])[0];
                   return(
                     <div key={k} onClick={()=>{setTab("health");setSelPillar(k);}}
-                      style={{padding:14,background:S.bg3,borderRadius:6,border:`1px solid ${riskColor(avg)}22`,borderTop:`2px solid ${riskColor(avg)}`,cursor:"pointer",transition:"background 0.15s"}}>
+                      style={{padding:14,background:S.bg3,borderRadius:0,border:`1px solid ${riskColor(avg)}22`,borderTop:`2px solid ${riskColor(avg)}`,cursor:"pointer",transition:"background 0.15s"}}>
                       <div style={{fontSize:18,marginBottom:4}}>{PILLAR_META[k].icon}</div>
                       <div style={{fontSize:9,fontWeight:600,color:S.txt2,fontFamily:"'IBM Plex Sans',sans-serif",marginBottom:6,lineHeight:1.3}}>{PILLAR_META[k].label}</div>
                       <div style={{fontSize:26,fontWeight:700,color:riskColor(avg),fontFamily:"'IBM Plex Sans',sans-serif",lineHeight:1}}>{avg}</div>
@@ -1410,7 +1410,7 @@ export default function App() {
             <div style={{display:"flex",flexDirection:"column",gap:16}}>
               <div style={S.card}>
                 <div style={S.ch}><span style={S.ct}>5 PILLARS</span><Tip text="Each pillar is an independent structural dimension of democratic health. Together they form the composite risk score. Score 0–100, higher = more risk. Click any pillar to see full country ranking."/></div>
-                <div style={{fontSize:9,color:"rgba(255,255,255,0.33)",fontFamily:"'IBM Plex Mono',monospace",marginBottom:16,padding:8,background:S.bg3,borderRadius:4,lineHeight:1.6}}>
+                <div style={{fontSize:9,color:"rgba(255,255,255,0.33)",fontFamily:"'IBM Plex Mono',monospace",marginBottom:16,padding:8,background:S.bg3,borderRadius:0,lineHeight:1.6}}>
                   Scores 0–100 · <strong style={{color:"#ef4444"}}>higher = more risk</strong><br/>Click a pillar to rank all countries
                 </div>
                 {PILLAR_KEYS.map(k=>{
@@ -1445,7 +1445,7 @@ export default function App() {
                       <span style={{color:riskColor(avg),fontSize:8}}>{riskLabel(avg)} · avg {avg}</span>
                     </div>
                   </div>
-                  <div style={{padding:12,background:S.bg3,borderRadius:5,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`,marginBottom:16}}>
+                  <div style={{padding:12,background:S.bg3,borderRadius:0,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`,marginBottom:16}}>
                     <p style={{fontSize:10,color:S.txt3,fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.7}}>{p.desc}</p>
                   </div>
                   <div style={{overflowX:"auto",maxHeight:520,overflowY:"auto"}}>
@@ -1512,7 +1512,7 @@ export default function App() {
                             <td style={{padding:"7px 10px"}}>
                               <div style={{display:"flex",alignItems:"center",gap:6}}>
                                 <span style={{fontFamily:"'IBM Plex Sans',sans-serif",fontWeight:700,fontSize:14,color:riskColor(c.risk)}}>{c.risk}</span>
-                                {firing>=4&&<span style={{fontSize:7,padding:"1px 4px",borderRadius:2,background:"rgba(239,68,68,0.15)",color:"#ef4444",fontFamily:"'IBM Plex Mono',monospace",border:"1px solid rgba(239,68,68,0.3)"}}>{firing} signals</span>}
+                                {firing>=4&&<span style={{fontSize:7,padding:"1px 4px",borderRadius:0,background:"rgba(239,68,68,0.15)",color:"#ef4444",fontFamily:"'IBM Plex Mono',monospace",border:"1px solid rgba(239,68,68,0.3)"}}>{firing} signals</span>}
                               </div>
                             </td>
                           </tr>
@@ -1536,7 +1536,7 @@ export default function App() {
                     return sigs.filter(s=>s>=65).length>=4;
                   }).sort((a,b)=>b.risk-a.risk).slice(0,9).map(c=>(
                     <div key={c.id} onClick={()=>setSel(c.id)}
-                      style={{padding:"10px 12px",background:"rgba(239,68,68,0.05)",border:"1px solid rgba(239,68,68,0.15)",borderRadius:5,cursor:"pointer",display:"flex",alignItems:"center",gap:8}}>
+                      style={{padding:"10px 12px",background:"rgba(239,68,68,0.05)",border:"1px solid rgba(239,68,68,0.15)",borderRadius:0,cursor:"pointer",display:"flex",alignItems:"center",gap:8}}>
                       <div style={{flex:1,minWidth:0}}>
                         <div style={{fontSize:11,fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{c.name}</div>
                         <div style={{fontSize:7.5,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace"}}>{c.region}</div>
@@ -1654,18 +1654,18 @@ export default function App() {
                       </div>
                     ))}
                   </div>
-                  <div style={{padding:12,background:S.bg3,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`,borderRadius:5,marginBottom:16}}>
+                  <div style={{padding:12,background:S.bg3,border:`1px solid ${S.dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"}`,borderRadius:0,marginBottom:16}}>
                     <div style={S.sl}>SUMMARY</div>
                     <p style={{fontSize:10.5,color:S.txt2,fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.8,marginTop:4}}>{scenario.summary}</p>
                   </div>
-                  <div style={{padding:12,background:"rgba(29,78,216,0.06)",border:"1px solid rgba(29,78,216,0.2)",borderRadius:5,marginBottom:16}}>
+                  <div style={{padding:12,background:"rgba(29,78,216,0.06)",border:"1px solid rgba(29,78,216,0.2)",borderRadius:0,marginBottom:16}}>
                     <div style={S.sl}>METHODOLOGY</div>
                     <p style={{fontSize:9,color:S.txt3,fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.7,marginTop:3}}>{scenario.method}</p>
                   </div>
                   <div style={S.sl}>PRIMARY DRIVERS <Tip text="Each driver ranked by logistic regression coefficient in the escalation model."/></div>
                   {scenario.drivers.map((d,i)=>(
                     <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"8px 0",borderBottom:`1px solid ${S.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.07)"}`}}>
-                      <div style={{width:18,height:18,borderRadius:"50%",background:"rgba(245,158,11,0.1)",border:"1px solid rgba(245,158,11,0.25)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:8,color:"#f59e0b",flexShrink:0}}>{i+1}</div>
+                      <div style={{width:18,height:18,borderRadius:0,background:"rgba(245,158,11,0.1)",border:"1px solid rgba(245,158,11,0.25)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:8,color:"#f59e0b",flexShrink:0}}>{i+1}</div>
                       <span style={{fontSize:10.5,color:S.txt2,fontFamily:"'IBM Plex Mono',monospace"}}>{d}</span>
                     </div>
                   ))}
@@ -1696,7 +1696,7 @@ export default function App() {
                 <div>
                   <div style={{display:"grid",gridTemplateColumns:"1fr 80px 1fr",marginBottom:16}}>
                     {[countryA,countryB].map((c,idx)=>(
-                      <div key={c.id} style={{textAlign:"center",padding:12,background:S.bg3,borderRadius:idx===0?"6px 0 0 6px":"0 6px 6px 0",border:`1px solid ${S.dark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.08)"}`,borderRight:idx===0?"none":"",borderLeft:idx===1?"none":""}}>
+                      <div key={c.id} style={{textAlign:"center",padding:12,background:S.bg3,borderRadius:0,border:`1px solid ${S.dark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.08)"}`,borderRight:idx===0?"none":"",borderLeft:idx===1?"none":""}}>
                         <div style={{fontSize:16,fontWeight:700,fontFamily:"'IBM Plex Sans',sans-serif"}}>{c.name}</div>
                         <div style={{fontSize:8.5,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",marginBottom:6}}>{c.region}</div>
                         <div style={{fontSize:38,fontWeight:700,color:riskColor(c.risk),fontFamily:"'IBM Plex Sans',sans-serif",lineHeight:1}}>{c.risk}</div>
@@ -1720,7 +1720,7 @@ export default function App() {
                   ))}
                   <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16,marginTop:12}}>
                     {[["V-Dem",countryA.vdem?.toFixed(2),countryB.vdem?.toFixed(2),"V-Dem 2024"],["Freedom House",countryA.fh,countryB.fh,"FH 2024"],["Press Freedom",countryA.rsf,countryB.rsf,"RSF 2024"],["TI Score",countryA.ti,countryB.ti,"TI 2024"],["ACLED 2024",countryA.acled_events?.toLocaleString(),countryB.acled_events?.toLocaleString(),"ACLED"],["Youth Unemp.",countryA.youth_unemp+"%",countryB.youth_unemp+"%","ILO 2023"]].map(([l,a,b,s])=>(
-                      <div key={l} style={{padding:12,background:S.bg3,borderRadius:5}}>
+                      <div key={l} style={{padding:12,background:S.bg3,borderRadius:0}}>
                         <div style={{fontSize:8,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",marginBottom:3}}>{l} <span style={{fontSize:7,color:"rgba(255,255,255,0.14)"}}>({s})</span></div>
                         <div style={{display:"flex",justifyContent:"space-between"}}>
                           <span style={{fontSize:13,fontWeight:700,color:S.txt2,fontFamily:"'IBM Plex Mono',monospace"}}>{a}</span>
@@ -1799,7 +1799,7 @@ export default function App() {
                 {[...COUNTRIES].sort((a,b)=>b.risk-a.risk).slice(0,8).map(c=>(
                   <div key={c.id} onClick={()=>setSel(c.id)} style={{padding:"10px 0",borderBottom:`1px solid ${S.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.07)"}`,cursor:"pointer"}}>
                     <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
-                      <div style={{width:8,height:8,borderRadius:"50%",background:riskColor(c.risk),flexShrink:0}}/>
+                      <div style={{width:8,height:8,borderRadius:0,background:riskColor(c.risk),flexShrink:0}}/>
                       <span style={{fontSize:11,fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif",flex:1}}>{c.name}</span>
                       <span style={{fontSize:9,color:riskColor(c.risk),fontFamily:"'IBM Plex Mono',monospace",fontWeight:700}}>{c.risk}</span>
                     </div>
@@ -1809,7 +1809,7 @@ export default function App() {
                         {label:"Media Freedom",val:c.rsf>60?"Open":c.rsf>40?"Partial":"Closed",col:c.rsf>60?"#22c55e":c.rsf>40?"#f59e0b":"#ef4444"},
                         {label:"Judiciary",val:c.rule<40?"Independent":c.rule<60?"Partial":"Captured",col:c.rule<40?"#22c55e":c.rule<60?"#f59e0b":"#ef4444"},
                       ].map(a=>(
-                        <div key={a.label} style={{padding:"4px 6px",background:S.bg3,borderRadius:3,borderLeft:`2px solid ${a.col}`}}>
+                        <div key={a.label} style={{padding:"4px 6px",background:S.bg3,borderRadius:0,borderLeft:`2px solid ${a.col}`}}>
                           <div style={{fontSize:7,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace"}}>{a.label}</div>
                           <div style={{fontSize:8.5,color:a.col,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600}}>{a.val}</div>
                         </div>
@@ -1832,12 +1832,12 @@ export default function App() {
                     <div key={i} style={{padding:"9px 0",borderBottom:`1px solid ${S.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.07)"}`}}>
                       <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
                         <span style={{fontSize:10.5,fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif"}}>{l.country}</span>
-                        <span style={{fontSize:8,padding:"1px 6px",borderRadius:3,background:`${l.c}18`,color:l.c,fontFamily:"'IBM Plex Mono',monospace",border:`1px solid ${l.c}33`}}>{l.window}</span>
+                        <span style={{fontSize:8,padding:"1px 6px",borderRadius:0,background:`${l.c}18`,color:l.c,fontFamily:"'IBM Plex Mono',monospace",border:`1px solid ${l.c}33`}}>{l.window}</span>
                       </div>
                       <div style={{fontSize:9,color:S.txt3,fontFamily:"'IBM Plex Mono',monospace",marginBottom:4,lineHeight:1.4}}>{l.lever}</div>
                       <div style={{display:"flex",alignItems:"center",gap:8}}>
-                        <div style={{flex:1,height:3,background:"rgba(255,255,255,0.07)",borderRadius:2,overflow:"hidden"}}>
-                          <div style={{height:"100%",width:`${l.impact}%`,background:l.c,borderRadius:2}}/>
+                        <div style={{flex:1,height:3,background:"rgba(255,255,255,0.07)",borderRadius:0,overflow:"hidden"}}>
+                          <div style={{height:"100%",width:`${l.impact}%`,background:l.c,borderRadius:0}}/>
                         </div>
                         <span style={{fontSize:8,color:l.c,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600,flexShrink:0}}>{l.impact}% impact est.</span>
                       </div>
@@ -1892,11 +1892,11 @@ export default function App() {
                     <div key={c.id} style={{padding:"8px 0",borderBottom:`1px solid ${S.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.07)"}`}}>
                       <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
                         <span style={{fontSize:11,fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif"}}>{c.name}</span>
-                        <span style={{fontSize:8,padding:"1px 5px",borderRadius:3,background:gap>30?"rgba(239,68,68,0.15)":"rgba(245,158,11,0.1)",color:gap>30?"#ef4444":"#f59e0b",fontFamily:"'IBM Plex Mono',monospace"}}>{gap>30?"HIGH GAP":"GAP"}: {gap}</span>
+                        <span style={{fontSize:8,padding:"1px 5px",borderRadius:0,background:gap>30?"rgba(239,68,68,0.15)":"rgba(245,158,11,0.1)",color:gap>30?"#ef4444":"#f59e0b",fontFamily:"'IBM Plex Mono',monospace"}}>{gap>30?"HIGH GAP":"GAP"}: {gap}</span>
                       </div>
                       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
-                        <div><div style={{fontSize:7,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",marginBottom:1}}>RISK</div><div style={{height:4,background:"rgba(255,255,255,0.07)",borderRadius:2,overflow:"hidden"}}><div style={{height:"100%",width:`${c.risk}%`,background:riskColor(c.risk),borderRadius:2}}/></div></div>
-                        <div><div style={{fontSize:7,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",marginBottom:1}}>FUNDING COVERAGE</div><div style={{height:4,background:"rgba(255,255,255,0.07)",borderRadius:2,overflow:"hidden"}}><div style={{height:"100%",width:`${fc}%`,background:"#3b82f6",borderRadius:2}}/></div></div>
+                        <div><div style={{fontSize:7,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",marginBottom:1}}>RISK</div><div style={{height:4,background:"rgba(255,255,255,0.07)",borderRadius:0,overflow:"hidden"}}><div style={{height:"100%",width:`${c.risk}%`,background:riskColor(c.risk),borderRadius:0}}/></div></div>
+                        <div><div style={{fontSize:7,color:S.txt4,fontFamily:"'IBM Plex Mono',monospace",marginBottom:1}}>FUNDING COVERAGE</div><div style={{height:4,background:"rgba(255,255,255,0.07)",borderRadius:0,overflow:"hidden"}}><div style={{height:"100%",width:`${fc}%`,background:"#3b82f6",borderRadius:0}}/></div></div>
                       </div>
                     </div>
                   );
@@ -1946,7 +1946,7 @@ export default function App() {
         {/* == DATA & CONFIDENCE == */}
         {tab==="data"&&(
           <div style={{display:"flex",flexDirection:"column",gap:16}}>
-            <div style={{padding:14,background:"rgba(245,158,11,0.05)",border:"1px solid rgba(245,158,11,0.18)",borderRadius:8,borderLeft:"3px solid #f59e0b"}}>
+            <div style={{padding:14,background:"rgba(245,158,11,0.05)",border:"1px solid rgba(245,158,11,0.18)",borderRadius:0,borderLeft:"3px solid #f59e0b"}}>
               <div style={{fontSize:9,fontWeight:600,color:"#f59e0b",fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.08em",marginBottom:4}}>EPISTEMOLOGICAL NOTE</div>
               <p style={{fontSize:10,color:S.txt2,fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.8}}>Democracy Dashboard integrates six independent data sources into a composite risk model. All scores represent probabilistic assessments, not deterministic facts. Uncertainty is highest for states with limited data access (North Korea, Afghanistan, Myanmar). The model separates structural decay from shock events - a high score reflects structural vulnerability, not an imminent crisis prediction. Users should treat scores as inputs to judgment, not substitutes for it.</p>
             </div>
@@ -1975,7 +1975,7 @@ export default function App() {
                         <td style={{padding:"8px 10px",fontSize:9,color:S.txt3,fontFamily:"'IBM Plex Mono',monospace"}}>{r.upd}</td>
                         <td style={{padding:"8px 10px",fontSize:8.5,color:S.txt3,fontFamily:"'IBM Plex Mono',monospace"}}>{r.lim}</td>
                         <td style={{padding:"8px 10px"}}>
-                          <span style={{fontSize:7.5,padding:"2px 6px",borderRadius:3,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600,
+                          <span style={{fontSize:7.5,padding:"2px 6px",borderRadius:0,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600,
                             background:r.s==="HIGH"?"rgba(239,68,68,0.12)":r.s==="MEDIUM"?"rgba(245,158,11,0.1)":"rgba(34,197,94,0.08)",
                             color:r.s==="HIGH"?"#ef4444":r.s==="MEDIUM"?"#f59e0b":"#22c55e"}}>{r.s}</span>
                         </td>
@@ -2014,7 +2014,7 @@ export default function App() {
                     <div key={i} style={{padding:"8px 0",borderBottom:`1px solid ${S.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.07)"}`}}>
                       <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
                         <span style={{fontSize:10,fontWeight:600,fontFamily:"'IBM Plex Sans',sans-serif"}}>{k.flag}</span>
-                        <span style={{fontSize:7.5,padding:"1px 5px",borderRadius:3,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600,
+                        <span style={{fontSize:7.5,padding:"1px 5px",borderRadius:0,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600,
                           background:k.level==="HIGH"?"rgba(239,68,68,0.12)":k.level==="MEDIUM"?"rgba(245,158,11,0.1)":"rgba(34,197,94,0.08)",
                           color:k.level==="HIGH"?"#ef4444":k.level==="MEDIUM"?"#f59e0b":"#22c55e"}}>{k.level}</span>
                       </div>
